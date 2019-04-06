@@ -1,6 +1,7 @@
 #ifndef _MAX_HPP
 #define _MAX_HPP
 
+#include <climits>
 #include "tree.hpp"
 
 // You will need to implement a complete visitor that
