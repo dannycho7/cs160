@@ -7,6 +7,12 @@
 // finds the maximum element in the tree. You can use
 // the print and sum visitors for reference.
 
-// WRITEME
+class MaxVisitor : public Visitor {
+public:
+	int max;
+	MaxVisitor() : max(INT_MIN) {}
+
+	void visitNode(Node* node);
+};
 
 #endif

@@ -4,4 +4,8 @@
 // finds the maximum element in the tree. You can use
 // the print and sum visitors for reference.
 
-// WRITEME
+void MaxVisitor::visitNode(Node* node) {
+	if (node->value > this->max)
+		this->max = node->value;
+	node->visit_children(this);
+}
