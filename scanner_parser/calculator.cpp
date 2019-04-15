@@ -142,14 +142,99 @@ void Parser::parse() {
     start();
 }
 
+void Parser::match(Token t) {
+    scanner.eatToken(t);
+    lookahead = scanner.nextToken();
+}
+
 void Parser::start() {
     // I am a placeholder. Implement a recursive descent parser starting from me. Add other methods for different recursive steps.
     // Depending on how you designed your grammar, how many levels of operator precedence you need, etc., you might end up with more
     // or less steps in the process.
-    //
-    // WRITEME
+    lookahead = scanner.nextToken();
+    exprlist();
+    scanner.eatToken(T_EOF);
 }
 
 // You will need to add more methods for this to work. Don't forget to also define them in calculator.hpp!
-// WRITEME
+void Parser::exprlist() {
+    expression();
+    exprlist_p();
+}
 
+void Parser::exprlist_p() {
+    switch (lookahead) {
+        case T_SEMICOLON:
+            match(T_SEMICOLON);
+            if (T_NEWLN == scanner.nextToken())
+                match(T_NEWLN);
+            expression();
+            exprlist_p();
+            break;
+        case T_EOF:
+            break;
+        default:
+            parseError(scanner.lineNumber(), lookahead);
+    }
+}
+void Parser::expression() {
+    term();
+    expression_p();
+}
+
+void Parser::expression_p() {
+    switch (lookahead) {
+        case T_PLUS:
+        case T_MINUS:
+            match(lookahead);
+            term();
+            expression_p();
+            break;
+        case T_CLOSEPAREN:
+        case T_SEMICOLON:
+        case T_EOF:
+            break;
+        default:
+            parseError(scanner.lineNumber(), lookahead);
+    }
+
+}
+void Parser::term() {
+    val();
+    term_p();
+}
+
+void Parser::term_p() {
+    switch (lookahead) {
+        case T_MULTIPLY:
+        case T_DIVIDE:
+        case T_MODULO:
+            match(lookahead);
+            val();
+            term_p();
+            break;
+        case T_PLUS:
+        case T_MINUS:
+        case T_CLOSEPAREN:
+        case T_SEMICOLON:
+        case T_EOF:
+            break;
+        default:
+            parseError(scanner.lineNumber(), lookahead);
+    }
+}
+
+void Parser::val() {
+    switch (lookahead) {
+        case T_OPENPAREN:
+            match(T_OPENPAREN);
+            expression();
+            match(T_CLOSEPAREN);
+            break;
+        case T_NUMBER:
+            match(T_NUMBER);
+            break;
+        default:
+            parseError(scanner.lineNumber(), lookahead);
+    }
+}

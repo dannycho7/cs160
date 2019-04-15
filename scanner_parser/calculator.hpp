@@ -31,9 +31,19 @@ class Parser {
     Scanner scanner;
     
     bool evaluate;
-    void start();
+    Token lookahead;
+
     // You will need to define the recursive descent functions you're going to use here.
-    // WRITEME
+    void match(Token t);
+
+    void start();
+    void exprlist();
+    void exprlist_p();
+    void expression();
+    void expression_p();
+    void term();
+    void term_p();
+    void val();
 public:
     void parse();
     

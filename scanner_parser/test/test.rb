@@ -24,7 +24,6 @@ doing :scan do
 	fail "5med2","Scan error: found invalid character e at line 1"
 end
 
-=begin
 doing :parse do
 	pass "2+4*3+3", ""
 	pass "2+4mod3+(2+5)", ""
@@ -37,6 +36,7 @@ doing :parse do
 
 end
 
+=begin
 doing :eval do
 	pass "((2+43)mod6+12)/3; (2*3*2*19)mod8", "5\n4"
 	pass "22*2-(9*5-5)", "4"
@@ -54,6 +54,5 @@ doing :eval do
 
 end
 =end
-
 
 test!
