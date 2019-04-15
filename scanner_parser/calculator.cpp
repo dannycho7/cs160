@@ -78,15 +78,11 @@ Token Scanner::nextToken() {
         default:
             if (isdigit(data[data_i])) {
                 if (data[data_i] == '0') {
-                    if (data_i + 1 >= data.length()) {
-                        scanError(line, data[data_i]);
+                    if (data_i + 1 >= data.length() && isdigit(data[data_i + 1])) {
+                        scanError(line, data[data_i + 1]);
                     } else {
-                        if (isdigit(data[data_i + 1])) {
-                            scanError(line, data[data_i + 1]);
-                        } else {
-                            value = 0;
-                            ret = T_NUMBER;
-                        }
+                        value = 0;
+                        ret = T_NUMBER;
                     }
                 } else {
                     size_t j = data_i;
