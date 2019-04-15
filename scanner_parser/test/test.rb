@@ -22,6 +22,7 @@ doing :scan do
 	fail "3+2a", "Scan error: found invalid character a at line 1"
 	fail "4^2+2", "Scan error: found invalid character ^ at line 1"
 	fail "5med2","Scan error: found invalid character e at line 1"
+        fail "3 2;4\n\n\n+a", "Scan error: found invalid character a at line 4"
 end
 
 doing :parse do
@@ -50,7 +51,6 @@ doing :eval do
 	fail "1/2;\n3/0", "Semantic error: dividing 3 with zero at line 2"
 	fail "3+3;\n3/(3-3)", "Semantic error: dividing 3 with zero at line 2"
 	fail "1/1;\n0/0", "Semantic error: dividing 0 with zero at line 2"
-
 end
 
 test!

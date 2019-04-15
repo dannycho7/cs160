@@ -188,27 +188,26 @@ int Parser::expression() {
 }
 
 int Parser::expression_p(int p_val) {
-    int ret, v;
+    long ret;
+    int v;
     switch (lookahead) {
-        case T_PLUS: {
+        case T_PLUS:
             match(T_PLUS);
             v = term();
-            long long int res = (long long int) (p_val) + v;
-            if (res > INT_MAX)
-                outOfBoundsError(scanner.lineNumber(), res);
-            ret = res;
+            ret = (long) (p_val) + v;
+            if (ret > INT_MAX)
+                outOfBoundsError(scanner.lineNumber(), ret);
             ret = expression_p(ret);
             break;
-        } case T_MINUS: {
+        case T_MINUS:
             match(T_MINUS);
             v = term();
-            long long int res = (long long int) (p_val) - v;
-            if (res > INT_MAX)
-                outOfBoundsError(scanner.lineNumber(), res);
-            ret = res;
+            ret = (long) (p_val) - v;
+            if (ret > INT_MAX)
+                outOfBoundsError(scanner.lineNumber(), ret);
             ret = expression_p(ret);
             break;
-        } case T_CLOSEPAREN:
+        case T_CLOSEPAREN:
         case T_SEMICOLON:
         case T_EOF:
             ret = p_val;
@@ -225,15 +224,15 @@ int Parser::term() {
 }
 
 int Parser::term_p(int p_val) {
-    int ret, v;
+    long ret;
+    int v;
     switch (lookahead) {
         case T_MULTIPLY: {
             match(lookahead);
             v = val();
-            long long int product = (long long int) (p_val) * v;
-            if (product > INT_MAX)
-                outOfBoundsError(scanner.lineNumber(), product);
-            ret = product;
+            ret = (long) (p_val) * v;
+            if (ret > INT_MAX)
+                outOfBoundsError(scanner.lineNumber(), ret);
             ret = term_p(ret);
             break;
         } case T_DIVIDE:
