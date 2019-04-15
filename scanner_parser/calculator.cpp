@@ -203,7 +203,7 @@ int Parser::expression_p(int p_val) {
             match(T_MINUS);
             v = term();
             ret = (long) (p_val) - v;
-            if (ret > INT_MAX)
+            if (ret < INT_MIN)
                 outOfBoundsError(scanner.lineNumber(), ret);
             ret = expression_p(ret);
             break;
