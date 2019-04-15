@@ -199,7 +199,7 @@ int Parser::expression_p(int p_val) {
             match(T_PLUS);
             v = term();
             ret = (long) (p_val) + v;
-            if (ret > INT_MAX)
+            if (evaluate && (ret > INT_MAX || ret < INT_MIN))
                 outOfBoundsError(scanner.lineNumber(), ret);
             ret = expression_p(ret);
             break;
@@ -207,7 +207,7 @@ int Parser::expression_p(int p_val) {
             match(T_MINUS);
             v = term();
             ret = (long) (p_val) - v;
-            if (ret < INT_MIN)
+            if (evaluate && (ret > INT_MAX || ret < INT_MIN))
                 outOfBoundsError(scanner.lineNumber(), ret);
             ret = expression_p(ret);
             break;
@@ -235,7 +235,7 @@ int Parser::term_p(int p_val) {
             match(lookahead);
             v = val();
             ret = (long) (p_val) * v;
-            if (ret > INT_MAX)
+            if (evaluate && (ret > INT_MAX || ret < INT_MIN))
                 outOfBoundsError(scanner.lineNumber(), ret);
             ret = term_p(ret);
             break;
