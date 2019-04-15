@@ -111,6 +111,8 @@ void Scanner::eatToken(Token toConsume) {
             case T_MODULO:
                 data_i += 3;
                 break;
+            case T_NEWLN:
+                line++;
             default:
                 data_i++;
         }
