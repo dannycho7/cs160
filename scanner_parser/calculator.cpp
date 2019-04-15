@@ -75,7 +75,7 @@ Token Scanner::nextToken() {
         case '\n':
             ret = T_NEWLN;
             break;
-        default:
+        default: {
             if (isdigit(data[data_i])) {
                 if (data[data_i] == '0') {
                     if (data_i + 1 >= data.length() && isdigit(data[data_i + 1])) {
@@ -88,12 +88,16 @@ Token Scanner::nextToken() {
                     size_t j = data_i;
                     while (j < data.length() && isdigit(data[j]))
                         j++;
-                    value = stoi(data.substr(data_i, j - data_i + 1));
+                    long token_val_long = stol(data.substr(data_i, j - data_i + 1));
+                    if (token_val_long > INT_MAX)
+                        outOfBoundsError(lineNumber(), token_val_long);
+                    value = token_val_long;
                     ret = T_NUMBER;
                 }
             } else {
                 scanError(line, data[data_i]);
             }
+        }
     }
 
     return ret;
