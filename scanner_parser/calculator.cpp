@@ -9,12 +9,11 @@ using namespace std;
 // Scanner implementation
 
 // You may have to modify this constructor, although it might not be neccessary.
-Scanner::Scanner() : line(0), 
+Scanner::Scanner() : line(1), 
                      value(0),
                      data_i(0) {
     string buf;
     while (getline(cin, buf)) {
-        cerr << "Buf: " << buf << '\n' << endl;
         if (data.length() != 0)
             data += '\n';
         data += buf;
@@ -90,7 +89,7 @@ Token Scanner::nextToken() {
                         }
                     }
                 } else {
-                    int j = data_i;
+                    size_t j = data_i;
                     while (j < data.length() && isdigit(data[j]))
                         j++;
                     value = stoi(data.substr(data_i, j - data_i + 1));

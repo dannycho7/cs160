@@ -12,7 +12,7 @@ using namespace std;
 class Scanner {
     int line;
     int value;
-    int data_i;
+    size_t data_i;
     string data;
 public:
     // You really need to implement these four methods for the scanner to work.
