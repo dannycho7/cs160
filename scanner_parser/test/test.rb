@@ -22,7 +22,7 @@ doing :scan do
 	fail "3+2a", "Scan error: found invalid character a at line 1"
 	fail "4^2+2", "Scan error: found invalid character ^ at line 1"
 	fail "5med2","Scan error: found invalid character e at line 1"
-        fail "3 2;4\n\n\n+a", "Scan error: found invalid character a at line 4"
+	fail "3 2;4\n\n\n+a", "Scan error: found invalid character a at line 4"
 end
 
 doing :parse do

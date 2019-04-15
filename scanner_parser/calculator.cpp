@@ -146,7 +146,8 @@ void Parser::parse() {
 
 void Parser::match(Token t) {
     scanner.eatToken(t);
-    lookahead = scanner.nextToken();
+    while ((lookahead = scanner.nextToken()) == T_NEWLN)
+        scanner.eatToken(lookahead);
 }
 
 void Parser::start() {
@@ -173,8 +174,6 @@ void Parser::exprlist_p() {
     switch (lookahead) {
         case T_SEMICOLON: {
             match(T_SEMICOLON);
-            if (T_NEWLN == scanner.nextToken())
-                match(T_NEWLN);
             int e = expression();
             if (evaluate)
                 results.push_back(e);
