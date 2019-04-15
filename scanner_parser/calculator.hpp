@@ -3,6 +3,7 @@
 #include "helpers.hpp"
 
 #include <climits>
+#include <vector>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class Parser {
     
     bool evaluate;
     Token lookahead;
+    vector<int> results;
 
     // You will need to define the recursive descent functions you're going to use here.
     void match(Token t);
@@ -39,11 +41,11 @@ class Parser {
     void start();
     void exprlist();
     void exprlist_p();
-    void expression();
-    void expression_p();
-    void term();
-    void term_p();
-    void val();
+    int expression();
+    int expression_p(int p_val);
+    int term();
+    int term_p(int p_val);
+    int val();
 public:
     void parse();
     

@@ -36,7 +36,6 @@ doing :parse do
 
 end
 
-=begin
 doing :eval do
 	pass "((2+43)mod6+12)/3; (2*3*2*19)mod8", "5\n4"
 	pass "22*2-(9*5-5)", "4"
@@ -53,6 +52,5 @@ doing :eval do
 	fail "1/1;\n0/0", "Semantic error: dividing 0 with zero at line 2"
 
 end
-=end
 
 test!

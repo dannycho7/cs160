@@ -152,87 +152,131 @@ void Parser::start() {
     lookahead = scanner.nextToken();
     exprlist();
     scanner.eatToken(T_EOF);
+
+    for (auto it = results.begin(); it != results.end(); it++)
+        cout << (*it) << endl;
 }
 
 // You will need to add more methods for this to work. Don't forget to also define them in calculator.hpp!
 void Parser::exprlist() {
-    expression();
+    int e = expression();
+    if (evaluate)
+        results.push_back(e);
     exprlist_p();
 }
 
 void Parser::exprlist_p() {
     switch (lookahead) {
-        case T_SEMICOLON:
+        case T_SEMICOLON: {
             match(T_SEMICOLON);
             if (T_NEWLN == scanner.nextToken())
                 match(T_NEWLN);
-            expression();
+            int e = expression();
+            if (evaluate)
+                results.push_back(e);
             exprlist_p();
             break;
-        case T_EOF:
+        } case T_EOF:
             break;
         default:
             parseError(scanner.lineNumber(), lookahead);
     }
 }
-void Parser::expression() {
-    term();
-    expression_p();
+int Parser::expression() {
+    int v = term();
+    return expression_p(v);
 }
 
-void Parser::expression_p() {
+int Parser::expression_p(int p_val) {
+    int ret, v;
     switch (lookahead) {
-        case T_PLUS:
-        case T_MINUS:
-            match(lookahead);
-            term();
-            expression_p();
+        case T_PLUS: {
+            match(T_PLUS);
+            v = term();
+            long long int res = (long long int) (p_val) + v;
+            if (res > INT_MAX)
+                outOfBoundsError(scanner.lineNumber(), res);
+            ret = res;
+            ret = expression_p(ret);
             break;
-        case T_CLOSEPAREN:
+        } case T_MINUS: {
+            match(T_MINUS);
+            v = term();
+            long long int res = (long long int) (p_val) - v;
+            if (res > INT_MAX)
+                outOfBoundsError(scanner.lineNumber(), res);
+            ret = res;
+            ret = expression_p(ret);
+            break;
+        } case T_CLOSEPAREN:
         case T_SEMICOLON:
         case T_EOF:
+            ret = p_val;
             break;
         default:
             parseError(scanner.lineNumber(), lookahead);
     }
-
-}
-void Parser::term() {
-    val();
-    term_p();
+    return ret;
 }
 
-void Parser::term_p() {
+int Parser::term() {
+    int v = val();
+    return term_p(v);
+}
+
+int Parser::term_p(int p_val) {
+    int ret, v;
     switch (lookahead) {
-        case T_MULTIPLY:
-        case T_DIVIDE:
+        case T_MULTIPLY: {
+            match(lookahead);
+            v = val();
+            long long int product = (long long int) (p_val) * v;
+            if (product > INT_MAX)
+                outOfBoundsError(scanner.lineNumber(), product);
+            ret = product;
+            ret = term_p(ret);
+            break;
+        } case T_DIVIDE:
+            match(lookahead);
+            v = val();
+            if (v == 0)
+                divideByZeroError(scanner.lineNumber(), p_val);
+            ret = p_val / v;
+            ret = term_p(ret);
+            break;
         case T_MODULO:
             match(lookahead);
-            val();
-            term_p();
+            v = val();
+            ret = p_val % v;
+            ret = term_p(ret);
             break;
         case T_PLUS:
         case T_MINUS:
         case T_CLOSEPAREN:
         case T_SEMICOLON:
         case T_EOF:
+            ret = p_val;
             break;
         default:
             parseError(scanner.lineNumber(), lookahead);
     }
+    return ret;
 }
 
-void Parser::val() {
+int Parser::val() {
+    int ret;
     switch (lookahead) {
         case T_OPENPAREN:
             match(T_OPENPAREN);
-            expression();
+            ret = expression();
             match(T_CLOSEPAREN);
             break;
         case T_NUMBER:
+            ret = scanner.getNumberValue();
             match(T_NUMBER);
             break;
         default:
             parseError(scanner.lineNumber(), lookahead);
     }
+    return ret;
 }
