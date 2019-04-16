@@ -77,23 +77,15 @@ Token Scanner::nextToken() {
             break;
         default: {
             if (isdigit(data[data_i])) {
-                if (data[data_i] == '0') {
-                    if (data_i + 1 >= data.length() && isdigit(data[data_i + 1])) {
-                        scanError(line, data[data_i + 1]);
-                    } else {
-                        value = 0;
-                        ret = T_NUMBER;
-                    }
-                } else {
-                    size_t j = data_i;
-                    while (j < data.length() && isdigit(data[j]))
-                        j++;
-                    long token_val_long = stol(data.substr(data_i, j - data_i + 1));
-                    if (token_val_long > INT_MAX)
-                        outOfBoundsError(lineNumber(), token_val_long);
-                    value = token_val_long;
-                    ret = T_NUMBER;
-                }
+                size_t j = data_i;
+                while (j < data.length() && isdigit(data[j]))
+                    j++;
+                value_s = data.substr(data_i, j - data_i);
+                long token_val_long = stol(value_s);
+                if (token_val_long > INT_MAX)
+                    outOfBoundsError(lineNumber(), token_val_long);
+                value = token_val_long;
+                ret = T_NUMBER;
             } else {
                 scanError(line, data[data_i]);
             }
@@ -110,7 +102,7 @@ void Scanner::eatToken(Token toConsume) {
     if (found == toConsume) {
         switch (found) {
             case T_NUMBER:
-                data_i += to_string(value).length();
+                data_i += value_s.length();
                 break;
             case T_MODULO:
                 data_i += 3;

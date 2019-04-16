@@ -13,6 +13,7 @@ using namespace std;
 class Scanner {
     int line;
     int value;
+    string value_s;
     size_t data_i;
     string data;
 public:
