@@ -23,7 +23,7 @@ Scanner::Scanner() : line(1),
 // You need to fill this method with the appropriate code for it to work as described in the project description.
 Token Scanner::nextToken() {
     // I am a placeholder. Change me into something that can actually decypher the next token without consuming it.
-    while (data_i < data.length() && data[data_i] == ' ')
+    while (data_i < data.length() && isspace(data[data_i]) && data[data_i] != '\n')
         data_i++;
 
     Token ret {T_EOF};
