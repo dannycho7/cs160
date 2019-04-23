@@ -52,7 +52,7 @@ Token Scanner::nextToken() {
                     if (data_i + 2 >= data.length()) {
                         scanError(line, data[data_i + 1]);
                     } else {
-                        if (data[data_i + 2 == 'd']) {
+                        if (data[data_i + 2] == 'd') {
                             ret = T_MODULO;
                         } else {
                             scanError(line, data[data_i + 2]);
