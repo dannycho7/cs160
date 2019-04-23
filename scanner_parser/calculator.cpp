@@ -241,6 +241,8 @@ int Parser::term_p(int p_val) {
         case T_MODULO:
             match(lookahead);
             v = val();
+            if (v == 0)
+                divideByZeroError(scanner.lineNumber(), p_val);
             ret = p_val % v;
             ret = term_p(ret);
             break;
