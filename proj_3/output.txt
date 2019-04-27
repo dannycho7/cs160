@@ -1,0 +1,216 @@
+./lang < tests/0.good.lang:
+No errors.
+
+./lang < tests/1.good.lang:
+No errors.
+
+./lang < tests/2.good.lang:
+No errors.
+
+./lang < tests/3.good.lang:
+No errors.
+
+./lang < tests/4.good.lang:
+No errors.
+
+./lang < tests/5.good.lang:
+No errors.
+
+./lang < tests/6.good.lang:
+No errors.
+
+./lang < tests/7.good.lang:
+No errors.
+
+./lang < tests/8.good.lang:
+No errors.
+
+./lang < tests/9.good.lang:
+No errors.
+
+./lang < tests/10.good.lang:
+No errors.
+
+./lang < tests/11.good.lang:
+No errors.
+
+./lang < tests/12.good.lang:
+No errors.
+
+./lang < tests/13.good.lang:
+No errors.
+
+./lang < tests/14.good.lang:
+No errors.
+
+./lang < tests/15.good.lang:
+No errors.
+
+./lang < tests/16.good.lang:
+No errors.
+
+./lang < tests/17.good.lang:
+No errors.
+
+./lang < tests/18.good.lang:
+No errors.
+
+./lang < tests/19.good.lang:
+No errors.
+
+./lang < tests/20.good.lang:
+No errors.
+
+./lang < tests/21.good.lang:
+No errors.
+
+./lang < tests/22.good.lang:
+No errors.
+
+./lang < tests/23.good.lang:
+No errors.
+
+./lang < tests/24.good.lang:
+No errors.
+
+./lang < tests/25.good.lang:
+No errors.
+
+./lang < tests/26.good.lang:
+No errors.
+
+./lang < tests/27.good.lang:
+No errors.
+
+./lang < tests/28.good.lang:
+No errors.
+
+./lang < tests/29.good.lang:
+No errors.
+
+./lang < tests/30.good.lang:
+No errors.
+
+./lang < tests/31.good.lang:
+No errors.
+
+./lang < tests/32.good.lang:
+No errors.
+
+./lang < tests/33.good.lang:
+No errors.
+
+./lang < tests/34.good.lang:
+No errors.
+
+./lang < tests/35.good.lang:
+No errors.
+
+./lang < tests/36.good.lang:
+No errors.
+
+./lang < tests/37.good.lang:
+No errors.
+
+./lang < tests/38.good.lang:
+No errors.
+
+./lang < tests/39.good.lang:
+No errors.
+
+./lang < tests/50.good.lang:
+No errors.
+
+./lang < tests/51.good.lang:
+No errors.
+
+./lang < tests/52.good.lang:
+No errors.
+
+./lang < tests/53.good.lang:
+No errors.
+
+./lang < tests/54.good.lang:
+No errors.
+
+./lang < tests/55.good.lang:
+No errors.
+
+./lang < tests/0.bad.lang:
+Error produced on line 4.
+
+./lang < tests/1.bad.lang:
+Error produced on line 6.
+
+./lang < tests/2.bad.lang:
+Error produced on line 9.
+
+./lang < tests/3.bad.lang:
+Error produced on line 12.
+
+./lang < tests/4.bad.lang:
+Error produced on line 22.
+
+./lang < tests/5.bad.lang:
+Error produced on line 4.
+
+./lang < tests/6.bad.lang:
+Error produced on line 55.
+
+./lang < tests/7.bad.lang:
+Error produced on line 15.
+
+./lang < tests/8.bad.lang:
+Error produced on line 23.
+
+./lang < tests/9.bad.lang:
+Error produced on line 41.
+
+./lang < tests/10.bad.lang:
+Error produced on line 9.
+
+./lang < tests/11.bad.lang:
+Error produced on line 12.
+
+./lang < tests/12.bad.lang:
+Error produced on line 1.
+
+./lang < tests/13.bad.lang:
+Error produced on line 11.
+
+./lang < tests/14.bad.lang:
+Error produced on line 27.
+
+./lang < tests/15.bad.lang:
+Error produced on line 2.
+
+./lang < tests/16.bad.lang:
+Error produced on line 11.
+
+./lang < tests/17.bad.lang:
+Error produced on line 20.
+
+./lang < tests/18.bad.lang:
+Error produced on line 17.
+
+./lang < tests/19.bad.lang:
+Error produced on line 37.
+
+./lang < tests/50.bad.lang:
+Error produced on line 24.
+
+./lang < tests/51.bad.lang:
+Error produced on line 13.
+
+./lang < tests/52.bad.lang:
+Error produced on line 20.
+
+./lang < tests/53.bad.lang:
+Error produced on line 6.
+
+./lang < tests/54.bad.lang:
+Error produced on line 5.
+
+./lang < tests/55.bad.lang:
+Error produced on line 14.
+
