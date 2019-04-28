@@ -12,7 +12,11 @@
 %error-verbose
 
 /* WRITEME: List all your tokens here */
-
+%token T_RETURN T_IF T_ELSE T_WHILE T_DO
+%token T_PRINT T_NEW T_EXTENDS
+%token T_INTEGER_TYPE T_BOOLEAN_TYPE T_NONE
+%token T_EQUALS T_AND T_OR T_NOT T_GEQ
+%token T_TRUE T_FALSE T_INTEGER T_IDENTIFIER
 /* WRITEME: Specify precedence here */
 
 %%

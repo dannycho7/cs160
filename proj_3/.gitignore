@@ -1,0 +1,6 @@
+lang
+*.o
+parser*
+!parser.y
+lexer*
+!lexer.l
