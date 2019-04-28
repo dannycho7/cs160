@@ -37,6 +37,7 @@
 "print"                 { return T_PRINT; }
 "new"                   { return T_NEW; }
 "extends"               { return T_EXTENDS; }
+"->"                    { return T_ARROW; }
 "integer"               { return T_INTEGER_TYPE; }
 "boolean"               { return T_BOOLEAN_TYPE; }
 "none"                  { return T_NONE; }
