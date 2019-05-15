@@ -6,6 +6,7 @@
     #include "ast.hpp"
     
     #define YYDEBUG 1
+    #define YYINITDEPTH 10000
     int yylex(void);
     void yyerror(const char *);
     
@@ -49,18 +50,21 @@
 %type <expression_list_ptr> ArgumentList ArgumentList_p
 
 %%
-Start : ClassDeclList { $$ = new ProgramNode($1); }
+Start : ClassDeclList { $$ = new ProgramNode($1); astRoot = $$; }
       ;
 ClassDeclList : ClassDeclList ClassDecl { $$ = $1; $$->push_back($2); }
               | ClassDecl { $$ = new std::list<ClassNode*>(); $$->push_back($1); }
               ;
 ClassDecl : T_IDENTIFIER OptExtend '{' MemberList MethodList '}' { $$ = new ClassNode($1, $2, $4, $5); }
+          | T_IDENTIFIER OptExtend '{' MemberList '}' { $$ = new ClassNode($1, $2, $4, NULL); }
+          | T_IDENTIFIER OptExtend '{' MethodList '}' { $$ = new ClassNode($1, $2, NULL, $4); }
+          | T_IDENTIFIER OptExtend '{' '}' { $$ = new ClassNode($1, $2, NULL, NULL); }
           ;
 OptExtend : T_EXTENDS T_IDENTIFIER { $$ = $2; }
           | %empty { $$ = NULL; }
           ;
 MemberList : MemberList Member { $$ = $1; $$->push_back($2); }
-           | %empty { $$ = new std::list<DeclarationNode*>(); }
+           | Member { $$ = new std::list<DeclarationNode*>(); $$->push_back($1); }
            ;
 Member : Type T_IDENTIFIER ';'  { std::list<IdentifierNode*>* decl_list = new std::list<IdentifierNode*>();
                                   decl_list->push_back($2);
@@ -76,7 +80,7 @@ ReturnType : Type { $$ = $1; }
            | T_NONE { $$ = new NoneNode(); }
            ;
 MethodList : MethodList Method { $$ = $1; $$->push_back($2); }
-           | %empty { $$ = new std::list<MethodNode*>(); }
+           | Method { $$ = new std::list<MethodNode*>(); $$->push_back($1); }
            ;
 Method : T_IDENTIFIER '(' ParameterList ')' T_ARROW ReturnType MethodDefn { $$ = new MethodNode($1, $3, $6, $7); }
        ;
@@ -91,9 +95,12 @@ Parameter : Type T_IDENTIFIER { $$ = new ParameterNode($1, $2); }
 MethodDefn : '{' Body '}' { $$ = $2; }
            ;
 Body : DeclList StmtList OptReturn { $$ = new MethodBodyNode($1, $2, $3); }
+     | DeclList OptReturn { $$ = new MethodBodyNode($1, NULL, $2); }
+     | StmtList OptReturn { $$ = new MethodBodyNode(NULL, $1, $2); }
+     | OptReturn { $$ = new MethodBodyNode(NULL, NULL, $1); }
      ;
 DeclList : DeclList Decl { $$ = $1; $$->push_back($2); }
-         | %empty { $$ = new std::list<DeclarationNode*>(); }
+         | Decl { $$ = new std::list<DeclarationNode*>(); $$->push_back($1); }
          ;
 Decl : Type DeclIdentifierList ';' { $$ = new DeclarationNode($1, $2); }
      ;
@@ -101,7 +108,7 @@ DeclIdentifierList : DeclIdentifierList ',' T_IDENTIFIER { $$ = $1; $$->push_bac
                    | T_IDENTIFIER { $$ = new std::list<IdentifierNode*>(); $$->push_back($1); }
                    ;
 StmtList : StmtList Stmt { $$ = $1; $$->push_back($2); }
-         | %empty { $$ = new std::list<StatementNode*>(); }
+         | Stmt { $$ = new std::list<StatementNode*>(); $$->push_back($1); }
          ;
 Stmt : T_IDENTIFIER OptDot '=' Expression ';' { $$ = new AssignmentNode($1, $2, $4); }
      | MethodCall ';' { $$ = new CallNode($1); }
@@ -119,7 +126,7 @@ OptElse : T_ELSE '{' Block '}' { $$ = $3; }
 OptReturn : T_RETURN Expression ';' { $$ = new ReturnStatementNode($2); }
           | %empty { $$ = NULL; }
           ;
-Block : StmtList Stmt { $$ = $1; $$->push_back($2); }
+Block : StmtList { $$ = $1; }
       ;
 Expression : Expression '+' Expression { $$ = new PlusNode($1, $3); }
            | Expression '-' Expression { $$ = new MinusNode($1, $3); }
