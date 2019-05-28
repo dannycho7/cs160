@@ -1,0 +1,16 @@
+Main {
+
+
+    main() -> none {
+        boolean local0;
+        boolean local1;
+        
+        print 168;
+        print not (false);
+        print 167;
+
+    }
+
+
+}
+

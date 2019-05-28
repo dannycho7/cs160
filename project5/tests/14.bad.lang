@@ -1,0 +1,54 @@
+class0 {
+    integer	member0;
+    integer	member1;
+
+    f0(integer arg0, integer arg1, boolean arg2) -> integer {
+        integer local0;
+        boolean local1;
+        integer local2;
+
+        local1 = false;
+        print true;
+        local0 = 78;
+        return 147;
+
+    }
+
+    class0(integer arg0, integer arg1, boolean arg2) -> none {
+        integer local0;
+        integer local1;
+        boolean local2;
+        integer i0;
+        
+        i0 = 74;
+        while 32 > i0 {
+             x = i0 + -3; /* TYPE ERROR THIS LINE **/
+        
+            local2 = arg2;
+            local1 = (157);
+            local0 = local1 * 224;
+        }
+        local1 = arg1;
+        local0 = 5;
+        print 14;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        integer local0;
+        integer local1;
+        integer local2;
+
+        print false or true;
+
+    }
+
+
+}
+

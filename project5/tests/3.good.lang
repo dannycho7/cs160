@@ -1,0 +1,22 @@
+Main {
+    main() -> none {
+        integer i0;
+        
+        if false {
+            print (not (false));
+        } else {
+            i0 = -68;
+            while i0 >= 58 {
+                 i0 = i0 + 6;
+            
+                print 81 / 138;
+                print 139;
+            }
+        }
+        
+
+    }
+
+
+}
+

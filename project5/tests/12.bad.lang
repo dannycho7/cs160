@@ -1,0 +1,307 @@
+class0 {
+    integer	member0;
+
+    f0(boolean arg0, integer arg1, integer arg2) -> boolean {
+        boolean local0;
+        
+        local0 = false;
+        return arg0;
+
+    }
+
+    f1(integer arg0, integer arg1, integer arg2, integer arg3) -> integer {
+        integer local0;
+        integer local1;
+        integer local2;
+        boolean local3;
+        integer local4;
+        integer local5;
+        
+        local5 = local1;
+        print 212;
+        local3 = f0(local3, arg3, 75);
+        print local3;
+        return arg3;
+
+    }
+
+    f2(boolean arg0, integer arg1, boolean arg2, boolean arg3) -> boolean {
+        integer local0;
+        integer local1;
+        boolean local2;
+        integer local3;
+        integer local4;
+        boolean local5;
+        
+        print local4;
+        return true;
+
+    }
+
+    class0(integer arg0, integer arg1, integer arg2, integer arg3, boolean arg4) -> none {
+        integer local0;
+        integer local1;
+        boolean local2;
+        boolean local3;
+        integer local4;
+        boolean local5;
+        integer i0;
+        
+        print true;
+        i0 = -36;
+        while -52 > i0 {
+             i0 = i0 - 1;
+        
+            print local2;
+        }
+
+    }
+
+
+}
+
+class1 {
+    integer	member0;
+    integer	member1;
+    class0	member2;
+
+    f0(integer arg0) -> none {
+        integer local0;
+        integer local1;
+        integer local2;
+        class0 local3;
+        boolean local4;
+        class0 local5;
+        
+        local3.member0 = local2;
+        print (true);
+        local0 = local2;
+
+    }
+
+    f1(integer arg0, class0 arg1, class0 arg2) -> none {
+        integer local0;
+        boolean local1;
+        boolean local2;
+        integer i0;
+        
+        local0 = ((arg1.member0));
+        i0 = 72;
+        while 48 > i0 {
+             i0 = i0 + -8;
+        
+            if true {
+                print local1;
+                local0 = member0;
+            }
+            
+            print -146;
+            if false {
+                local1 = local2;
+                local0 = member1 * 57;
+            } else {
+                f0(member0);
+                if true {
+                    local0 = arg1.f1(member1, 92, 34, 243);
+                    print member1;
+                    local1 = false;
+                }
+                
+                local1 = local0; /* TYPE ERROR THIS LINE **/
+            }
+            
+        }
+
+    }
+
+    f2(integer arg0, class0 arg1, boolean arg2, integer arg3, integer arg4) -> boolean {
+        boolean local0;
+        boolean local1;
+        integer local2;
+        class0 local3;
+        integer local4;
+        integer i0, i1, i2;
+        
+        print 165;
+        i0 = 1152;
+        while 9 > i0 {
+             i0 = i0 / 2;
+        
+            f0(local3.member0);
+            f0(188 / 208 + arg4);
+            f1(arg3, member2, new class0(local2 / member0, local4, (arg3), 15, false));
+        }
+        if arg2 {
+            i1 = 17;
+            while -59 > i1 {
+                 i1 = i1 + -4;
+            
+                i2 = 65;
+                while 17 > i2 {
+                     i2 = i2 + -4;
+                
+                    local4 = local3.f1(arg0, 59, 29 + arg0, arg4);
+                    if true {
+                        print local4 + local3.member0 * 21;
+                        print local3.f1(arg4, (-53), ((71)), 106);
+                        f1(-162, new class0((local2), local3.member0, 174, 77 * local4, local3.f1(90, -arg4, local3.f1(236 / 40, 39, local3.member0, member1), local3.member0) > 43), local3);
+                    }
+                    
+                }
+                if (arg2) {
+                    f1(49, arg1, arg1);
+                    print local3.f1(local3.member0 - 18, local3.f1(-arg0, member1, 27 + 28, 168), member1, arg4) * 44 + 204;
+                    if false {
+                        local0 = not (false);
+                        local1 = arg2;
+                        if arg2 {
+                            print (true);
+                            f0(arg4);
+                            print true;
+                        } else {
+                            local1 = false;
+                            local2 = member0;
+                        }
+                        
+                    } else {
+                        local3.member0 = 241;
+                    }
+                    
+                } else {
+                    f0(201);
+                    print member0 equals member0;
+                }
+                
+            }
+            local4 = 86;
+            local4 = local3.member0;
+        }
+        
+        return local1;
+
+    }
+
+    f3() -> integer {
+        integer local0;
+        class0 local1;
+        integer local2;
+        integer i0, i1;
+        
+        if 55 > 204 / local0 {
+            print false;
+            local1.member0 = 73;
+            i0 = 7680;
+            while 60 > i0 {
+                 i0 = i0 / 2;
+            
+                print false or true;
+                local1.member0 = member0 * local0;
+                print false and false;
+            }
+        } else {
+            i1 = 88;
+            while 58 >= i1 {
+                 i1 = i1 - 3;
+            
+                local0 = local2;
+            }
+            f0(member1);
+        }
+        
+        local1.member0 = 75;
+        print 85;
+        print true and local2 > 49;
+        return 45 * local2;
+
+    }
+
+    class1(boolean arg0, integer arg1, boolean arg2, boolean arg3) -> none {
+        boolean local0;
+        class0 local1;
+        integer local2;
+        boolean local3;
+        class0 local4;
+        integer local5;
+        integer i0, i1, i2, i3;
+        
+        f1(arg1, local1, local1);
+        print local0;
+        print local0;
+        i0 = 96;
+        while i0 >= 105 {
+             i0 = i0 * 3;
+        
+            if false {
+                i1 = 45;
+                while -32 > i1 {
+                     i1 = i1 - 7;
+                
+                    f1(local4.member0, new class0(131, local4.f1(member1, local2, member0, member0), local5, local2, true), new class0(local5, member1 * member1, 236 * local2, member1, local3));
+                    i2 = 23;
+                    while 23 > i2 {
+                         i2 = i2 - 0;
+                    
+                        local0 = arg3;
+                    }
+                }
+                print 151;
+                print 56;
+            } else {
+                i3 = 68;
+                while i3 >= 16452 {
+                     i3 = i3 * 4;
+                
+                    local1.member0 = 192 - local2 / 252;
+                    local1.member0 = 1;
+                    local1.member0 = member0;
+                }
+            }
+            
+            local2 = arg1;
+        }
+        local5 = (arg1);
+
+    }
+
+
+}
+
+class2 extends class0 {
+    integer	member1;
+    class1	member2;
+    integer	member3;
+    class0	member4;
+    boolean	member5;
+    integer	member6;
+
+    class2() -> none {
+        class1 local0;
+        boolean local1;
+        integer local2;
+        integer local3;
+        
+        print member3;
+        local2 = local2;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        boolean local0;
+        class1 local1;
+        
+        local1.f0(local1.member1 - 29 / local1.member1);
+        local1.f0(195);
+        local1.member1 = local1.f3();
+        local1.member0 = local1.f3();
+
+    }
+
+
+}
+

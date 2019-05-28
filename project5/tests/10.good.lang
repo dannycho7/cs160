@@ -1,0 +1,61 @@
+class0 {
+    integer	member0;
+    integer	member1;
+
+    f0() -> integer {
+        boolean local0;
+        
+        return (member1);
+
+    }
+
+    f1(boolean arg0, integer arg1) -> none {
+        integer local0;
+        boolean local1;
+        integer local2;
+        
+
+    }
+
+    class0(integer arg0, boolean arg1, boolean arg2) -> none {
+        boolean local0;
+        boolean local1;
+        integer local2;
+        
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        integer local0;
+        integer local1;
+        class0 local2;
+        integer i0;
+        
+        local0 = local2.member0;
+        i0 = -39;
+        while -39 >= i0 {
+             i0 = i0 + 0;
+        
+            local0 = 233;
+            print (not (true));
+        }
+        if false {
+            local2.f1(false, local1 / local2.member0);
+            if not (false) {
+                local2.f1(true, 112);
+            }
+            
+        }
+        
+
+    }
+
+
+}
+

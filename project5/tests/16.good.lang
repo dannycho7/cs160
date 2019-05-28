@@ -1,0 +1,64 @@
+class0 {
+    boolean	member0;
+    boolean	member1;
+    integer	member2;
+
+    f0(boolean arg0, integer arg1) -> integer {
+        integer local0;
+        integer local1;
+        
+        return arg1;
+
+    }
+
+    class0(integer arg0, integer arg1, integer arg2) -> none {
+        integer local0;
+        integer local1;
+        boolean local2;
+        
+        print (6 >= 3 + arg2);
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        integer local0;
+        boolean local1;
+        integer i0;
+        
+        if local1 or false {
+            local1 = false;
+        } else {
+            local1 = true;
+            print local1;
+        }
+        
+        local1 = local1 or false;
+        if false {
+            print local1;
+            i0 = -46;
+            while i0 >= 179 {
+                 i0 = i0 + 9;
+            
+                print 159;
+                local1 = local1 and true;
+                if true {
+                    local1 = false;
+                    print -local0;
+                }
+                
+            }
+            local0 = local0;
+        }
+        
+
+    }
+
+
+}
+

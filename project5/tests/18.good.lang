@@ -1,0 +1,42 @@
+class0 {
+
+
+    f0() -> integer {
+        boolean local0;
+        integer local1;
+        boolean local2;
+        
+        return 132;
+
+    }
+
+    f1(integer arg0) -> boolean {
+        integer local0;
+        
+        return false;
+
+    }
+
+    class0(integer arg0, integer arg1, integer arg2) -> none {
+        integer local0;
+        
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        integer local0;
+        boolean local1;
+        
+        local1 = local1;
+
+    }
+
+
+}
+

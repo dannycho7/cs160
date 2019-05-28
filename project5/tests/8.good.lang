@@ -1,0 +1,15 @@
+Main {
+
+
+    main() -> none {
+        integer local0;
+        
+        local0 = local0;
+        local0 = local0 - 164;
+
+    }
+
+
+}
+
+

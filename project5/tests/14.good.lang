@@ -1,0 +1,50 @@
+class0 {
+    integer	member0;
+
+    f0(boolean arg0, boolean arg1, boolean arg2) -> none {
+        boolean local0;
+        integer i0;
+        
+        print true;
+        i0 = 4293;
+        while 53 > i0 {
+             i0 = i0 / 3;
+        
+            local0 = arg0;
+        }
+
+    }
+
+    class0(boolean arg0, boolean arg1, integer arg2) -> none {
+        integer local0;
+        
+        local0 = (180 * member0);
+        local0 = -local0;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        boolean local0;
+        integer local1;
+        boolean local2;
+        integer i0;
+        
+        i0 = 3072;
+        while 96 > i0 {
+             i0 = i0 / 2;
+        
+            local2 = true or local0;
+        }
+        local2 = false or 200 >= 104;
+
+    }
+
+
+}
+

@@ -1,0 +1,97 @@
+class0 {
+    boolean	member0;
+    boolean	member1;
+
+    f0(boolean arg0, integer arg1, boolean arg2) -> integer {
+        integer local0;
+        boolean local1;
+        integer local2;
+        integer local3;
+        
+        print -local2;
+        print local0;
+        local0 = (arg1);
+        return local0;
+
+    }
+
+    f1(integer arg0) -> integer {
+        integer local0;
+        boolean local1;
+        integer local2;
+        integer local3;
+        
+        print (188);
+        return 22;
+
+    }
+
+    f2(integer arg0, integer arg1, integer arg2, integer arg3) -> integer {
+        boolean local0;
+        boolean local1;
+        integer local2;
+        integer local3;
+        integer local4;
+        
+        print local2;
+        return arg1 >= 16; /* TYPE ERROR THIS LINE **/
+
+    }
+
+    class0(boolean arg0, boolean arg1, integer arg2) -> none {
+        integer local0;
+        boolean local1;
+        integer local2;
+        integer local3;
+        integer i0, i1;
+        
+        i0 = 177;
+        while 59 > i0 {
+             i0 = i0 / 3;
+        
+            local1 = true;
+            local1 = local1;
+        }
+        local3 = -236;
+        local0 = 208;
+        i1 = -65;
+        while -128 >= i1 {
+             i1 = i1 + -3;
+        
+            if local1 {
+                local2 = 67 - 161;
+                local0 = f0(false, local3, member1 and local1);
+            } else {
+                print not (local1);
+            }
+            
+            local3 = local0;
+            if local1 {
+                print 95 > arg2 - local3;
+            }
+            
+        }
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        integer i0;
+        
+        i0 = -62;
+        while i0 > -44 {
+             i0 = i0 + 1;
+        
+            print 55;
+        }
+
+    }
+
+
+}
+

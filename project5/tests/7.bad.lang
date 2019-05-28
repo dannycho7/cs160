@@ -1,0 +1,208 @@
+class0 {
+    integer	member0;
+    boolean	member1;
+
+    f0(integer arg0, integer arg1, integer arg2) -> integer {
+        boolean local0;
+        integer local1;
+        integer local2;
+        boolean local3;
+        integer local4;
+        boolean local5;
+        
+        local4 = arg1;
+        return 246;
+
+    }
+
+    f1(integer arg0, integer arg1, integer arg2, integer arg3) -> boolean {
+        boolean local0;
+        boolean local1;
+        integer local2;
+        
+        if false {
+            local0 = not (153 > 25);
+        } else {
+            local2 = member0;
+        }
+        
+        return true;
+
+    }
+
+    f2(boolean arg0) -> boolean {
+        integer local0;
+        integer local1;
+        integer i0, i1, i2;
+        
+        local0 = (34);
+        i0 = 2;
+        while -18 >= i0 {
+             i0 = i0 + -2;
+        
+            local1 = local1;
+            print false;
+            i1 = 196830;
+            while 10 > i1 {
+                 i1 = i1 / 3;
+            
+                local1 = member0;
+                i2 = -91;
+                while i2 >= 2096 {
+                     i2 = i2 * 3;
+                
+                    local1 = local1;
+                }
+                local0 = local0;
+            }
+        }
+        print 64;
+        return true;
+
+    }
+
+    class0(integer arg0, integer arg1, boolean arg2, integer arg3, boolean arg4) -> none {
+        integer local0;
+        
+        print not (arg2);
+        local0 = (58);
+        local0 = arg1;
+
+    }
+
+
+}
+
+class1 extends class0 {
+    class0	member2;
+    integer	member3;
+
+    f3(integer arg0, boolean arg1) -> none {
+        boolean local0;
+        class0 local1;
+        integer local2;
+        class0 local3;
+        
+
+    }
+
+    class1(boolean arg0, integer arg1, integer arg2, integer arg3, boolean arg4) -> none {
+        boolean local0;
+        integer local1;
+        integer local2;
+        boolean local3;
+        integer i0;
+        
+        i0 = -73;
+        while i0 >= -64 {
+             i0 = i0 * 3;
+        
+            local3 = member2.f1(55, local2, local1 / local1, (member2.member0) * 249);
+            f3(member2.f0(66, local1, local1 * local1), member2.f2(local0) and local3);
+        }
+        local1 = arg1;
+
+    }
+
+
+}
+
+class2 {
+    integer	member0;
+    integer	member1;
+    integer	member2;
+    boolean	member3;
+    class1	member4;
+
+    f0() -> integer {
+        class1 local0;
+        boolean local1;
+        boolean local2;
+        integer i0;
+        
+        local1 = local2 and local1;
+        if false {
+            print local1;
+            local0.f3(member0, false);
+        }
+        
+        i0 = -50;
+        while i0 >= 10 {
+             i0 = i0 - -10;
+        
+            print 7 / (182);
+            if 213 > local0.member3 {
+                local0.f3(local0.member0, false);
+            }
+            
+        }
+        return 191 / member2;
+
+    }
+
+    class2(boolean arg0) -> none {
+        
+
+    }
+
+
+}
+
+class3 extends class0 {
+    integer	member2;
+
+    class3(integer arg0, boolean arg1, boolean arg2) -> none {
+        integer local0;
+        integer local1;
+        
+        print member0;
+
+    }
+
+
+}
+
+Main {
+
+	integer val1; /* TYPE ERROR THIS LINE **/
+	boolean val2;
+
+    main() -> none {
+        class3 local0;
+        class3 local1;
+        boolean local2;
+        integer i0, i1, i2;
+        
+        if local1.member1 {
+            i0 = -85;
+            while -97 >= i0 {
+                 i0 = i0 - 4;
+            
+                local2 = local1.member2 >= local1.member2;
+            }
+        }
+        
+        i1 = -65;
+        while i1 >= 145 {
+             i1 = i1 + 10;
+        
+            local0.member2 = (244);
+            print local1.member1;
+            i2 = -11;
+            while -11 > i2 {
+                 i2 = i2 + 0;
+            
+                local1.member2 = 149;
+            }
+        }
+        print false;
+        if local1.member1 {
+            local2 = true;
+        }
+        
+
+    }
+
+
+}
+

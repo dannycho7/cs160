@@ -1,0 +1,46 @@
+class0 {
+    boolean	member0;
+    integer	member1;
+    integer	member2;
+
+    class0(integer arg0, integer arg1) -> none {
+        
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        boolean local0;
+        integer i0, i1;
+        
+        if (local0) {
+            i0 = 21;
+            while i0 >= 85 {
+                 i0 = i0 * 4;
+            
+                i1 = 61;
+                while -107 >= i1 {
+                     i1 = i1 + -8;
+                
+                    local0 = true or local0;
+                }
+                print 207 * 184;
+                print (208);
+            }
+            print 159;
+        } else {
+            local0 = false;
+        }
+        
+
+    }
+
+
+}
+
+

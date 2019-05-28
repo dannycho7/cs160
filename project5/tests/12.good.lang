@@ -1,0 +1,54 @@
+class0 {
+    integer	member0;
+    integer	member1;
+
+    f0(integer arg0, integer arg1, boolean arg2) -> integer {
+        integer local0;
+        boolean local1;
+        integer i0;
+        
+        i0 = 1536;
+        while 3 >= i0 {
+             i0 = i0 / 2;
+        
+            print -local0;
+            local1 = arg0 equals 113;
+        }
+        return -local0;
+
+    }
+
+    class0(integer arg0, integer arg1, integer arg2) -> none {
+        
+
+    }
+
+
+}
+
+class1 extends class0 {
+
+
+    class1(integer arg0, integer arg1) -> none {
+        class0 local0;
+        
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        
+        print 250;
+        print true;
+
+    }
+
+
+}
+
+

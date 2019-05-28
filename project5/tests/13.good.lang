@@ -1,0 +1,35 @@
+class0 {
+    integer	member0;
+
+    f0(integer arg0, boolean arg1, boolean arg2) -> integer {
+        
+        print false;
+        return 124 + 179;
+
+    }
+
+    class0(boolean arg0, integer arg1, integer arg2) -> none {
+        integer local0;
+        boolean local1;
+        
+        print arg0 and false;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        boolean local0;
+        class0 local1;
+        
+        local0 = 217 equals 13;
+
+    }
+
+
+}
+

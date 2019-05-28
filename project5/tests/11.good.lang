@@ -1,0 +1,50 @@
+class0 {
+    integer	member0;
+    boolean	member1;
+    boolean	member2;
+
+    class0(boolean arg0, integer arg1) -> none {
+        
+
+    }
+
+
+}
+
+class1 extends class0 {
+    class0	member3;
+
+    f0(class0 arg0) -> integer {
+        
+        return 163;
+
+    }
+
+    class1(boolean arg0, boolean arg1, boolean arg2) -> none {
+        boolean local0;
+        integer local1;
+        boolean local2;
+        
+        print 157;
+        local0 = member3.member1;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        integer local0;
+        integer local1;
+        class0 local2;
+        
+
+    }
+
+
+}
+
+

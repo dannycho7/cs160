@@ -1,0 +1,91 @@
+class0 {
+    boolean	member0;
+    boolean	member1;
+    boolean	member2;
+    integer	member3;
+
+    f0(integer arg0) -> boolean {
+        integer local0;
+        boolean local1;
+        boolean local2;
+        boolean local3;
+        boolean local4;
+        boolean local5;
+        integer i0;
+        
+        print local0 > arg0;
+        i0 = 46;
+        while i0 > 217 {
+             i0 = i0 + 9;
+        
+            local1 = local5;
+            if local0 > 9 {
+                print 196;
+            }
+            
+        }
+        return local3;
+
+    }
+
+    f1(boolean arg0) -> none {
+        integer local0;
+        integer local1;
+        integer i0, i1;
+        
+        i0 = 26624;
+        while 26 > i0 {
+             i0 = i0 / 4;
+        
+            if member1 {
+                local1 = local1;
+                print local0;
+            } else {
+                if true {
+                    local0.intval = 136; /* TYPE ERROR THIS LINE **/
+                    local0 = local0;
+                } else {
+                    print arg0;
+                    local0 = 70;
+                    local1 = 65;
+                }
+                
+                i1 = 5;
+                while i1 >= 32 {
+                     i1 = i1 + 9;
+                
+                    local0 = 28;
+                }
+                local1 = 86;
+            }
+            
+        }
+
+    }
+
+    class0() -> none {
+        integer local0;
+        integer local1;
+        boolean local2;
+        boolean local3;
+        integer local4;
+        integer local5;
+        
+        f1(true);
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        
+
+    }
+
+
+}
+

@@ -1,0 +1,14 @@
+Main {
+
+
+    main() -> none {
+        integer local0;
+        
+        local0 = (-93);
+        print 51 equals local0;
+
+    }
+
+
+}
+

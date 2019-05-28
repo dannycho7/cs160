@@ -1,0 +1,13 @@
+Main {
+    main() -> none {
+        boolean local0;
+        boolean local1;
+        integer i0;
+        
+        i0 = 30;
+        do {
+            i0 = i0 + 6;
+            print 207;
+        } while (not not (i0 >= 42));
+    }
+}

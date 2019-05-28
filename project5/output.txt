@@ -1,0 +1,1210 @@
+./lang < tests/0.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        12,
+        VariableTable {
+          i0 -> {Integer, -12, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Boolean, -8, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/1.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        12,
+        VariableTable {
+          i0 -> {Integer, -4, 4},
+          i1 -> {Integer, -8, 4},
+          i2 -> {Integer, -12, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/2.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        12,
+        VariableTable {
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Boolean, -12, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/3.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        4,
+        VariableTable {
+          i0 -> {Integer, -4, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/4.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        4,
+        VariableTable {
+          local0 -> {Integer, -4, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/5.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        8,
+        VariableTable {
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/6.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        12,
+        VariableTable {
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Integer, -12, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/7.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        0,
+        VariableTable {}
+      }
+    }
+  }
+}
+
+./lang < tests/8.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        4,
+        VariableTable {
+          local0 -> {Integer, -4, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/9.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        8,
+        VariableTable {
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Boolean, -8, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/10.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        16,
+        VariableTable {
+          i0 -> {Integer, -16, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Object(class0), -12, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Integer, 0, 4},
+      member1 -> {Integer, 4, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        12,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Boolean, -8, 4},
+          local2 -> {Integer, -12, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        4,
+        VariableTable {
+          local0 -> {Boolean, -4, 4}
+        }
+      },
+      f1 -> {
+        None,
+        12,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Boolean, -8, 4},
+          local2 -> {Integer, -12, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/11.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        12,
+        VariableTable {
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Object(class0), -12, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Integer, 0, 4},
+      member1 -> {Boolean, 4, 4},
+      member2 -> {Boolean, 8, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        0,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4}
+        }
+      }
+    }
+  },
+  class1 -> {
+    class0,
+    VariableTable {
+      member3 -> {Object(class0), 0, 4}
+    },
+    MethodTable {
+      class1 -> {
+        None,
+        12,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Boolean, -12, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        0,
+        VariableTable {
+          arg0 -> {Object(class0), 12, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/12.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        0,
+        VariableTable {}
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Integer, 0, 4},
+      member1 -> {Integer, 4, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        0,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        12,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          i0 -> {Integer, -12, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Boolean, -8, 4}
+        }
+      }
+    }
+  },
+  class1 -> {
+    class0,
+    VariableTable {},
+    MethodTable {
+      class1 -> {
+        None,
+        4,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          local0 -> {Object(class0), -4, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/13.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        8,
+        VariableTable {
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Object(class0), -8, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Integer, 0, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        8,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Boolean, -8, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        0,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Boolean, 20, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/14.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        16,
+        VariableTable {
+          i0 -> {Integer, -16, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Boolean, -12, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Integer, 0, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        4,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          local0 -> {Integer, -4, 4}
+        }
+      },
+      f0 -> {
+        None,
+        8,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          i0 -> {Integer, -8, 4},
+          local0 -> {Boolean, -4, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/15.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        12,
+        VariableTable {
+          local0 -> {Object(class0), -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Object(class0), -12, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Integer, 0, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        0,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        0,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4}
+        }
+      },
+      f1 -> {
+        Integer,
+        0,
+        VariableTable {
+          arg0 -> {Integer, 12, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/16.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        12,
+        VariableTable {
+          i0 -> {Integer, -12, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Boolean, -8, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Boolean, 0, 4},
+      member1 -> {Boolean, 4, 4},
+      member2 -> {Integer, 8, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        12,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Boolean, -12, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        8,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/17.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        12,
+        VariableTable {
+          i0 -> {Integer, -8, 4},
+          i1 -> {Integer, -12, 4},
+          local0 -> {Boolean, -4, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Boolean, 0, 4},
+      member1 -> {Integer, 4, 4},
+      member2 -> {Integer, 8, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        0,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/18.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        8,
+        VariableTable {
+          local0 -> {Integer, -4, 4},
+          local1 -> {Boolean, -8, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {},
+    MethodTable {
+      class0 -> {
+        None,
+        4,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          local0 -> {Integer, -4, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        12,
+        VariableTable {
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Boolean, -12, 4}
+        }
+      },
+      f1 -> {
+        Boolean,
+        4,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          local0 -> {Integer, -4, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/19.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        4,
+        VariableTable {
+          i0 -> {Integer, -4, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Boolean, 0, 4},
+      member1 -> {Integer, 4, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        12,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          i0 -> {Integer, -12, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4}
+        }
+      },
+      f0 -> {
+        None,
+        4,
+        VariableTable {
+          local0 -> {Integer, -4, 4}
+        }
+      }
+    }
+  },
+  class1 -> {
+    VariableTable {
+      member0 -> {Object(class0), 0, 4},
+      member1 -> {Integer, 4, 4},
+      member2 -> {Boolean, 8, 4}
+    },
+    MethodTable {
+      class1 -> {
+        None,
+        4,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          local0 -> {Boolean, -4, 4}
+        }
+      },
+      f0 -> {
+        Boolean,
+        8,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Object(class0), 20, 4},
+          local0 -> {Object(class0), -4, 4},
+          local1 -> {Boolean, -8, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/20.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        16,
+        VariableTable {
+          i0 -> {Integer, -16, 4},
+          local0 -> {Object(class1), -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Object(class2), -12, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {},
+    MethodTable {
+      class0 -> {
+        None,
+        0,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          arg3 -> {Boolean, 24, 4}
+        }
+      },
+      f0 -> {
+        Boolean,
+        12,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          arg3 -> {Boolean, 24, 4},
+          arg4 -> {Boolean, 28, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Boolean, -8, 4},
+          local2 -> {Integer, -12, 4}
+        }
+      },
+      f1 -> {
+        Boolean,
+        12,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          i0 -> {Integer, -12, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Integer, -8, 4}
+        }
+      },
+      f2 -> {
+        Integer,
+        16,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          i0 -> {Integer, -16, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Integer, -12, 4}
+        }
+      }
+    }
+  },
+  class1 -> {
+    class0,
+    VariableTable {
+      member0 -> {Object(class0), 0, 4},
+      member1 -> {Object(class0), 4, 4},
+      member2 -> {Object(class0), 8, 4},
+      member3 -> {Integer, 12, 4}
+    },
+    MethodTable {
+      class1 -> {
+        None,
+        28,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          i0 -> {Integer, -24, 4},
+          i1 -> {Integer, -28, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Object(class0), -12, 4},
+          local3 -> {Integer, -16, 4},
+          local4 -> {Integer, -20, 4}
+        }
+      },
+      f3 -> {
+        None,
+        16,
+        VariableTable {
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Boolean, -8, 4},
+          local2 -> {Boolean, -12, 4},
+          local3 -> {Boolean, -16, 4}
+        }
+      },
+      f4 -> {
+        Integer,
+        20,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          arg3 -> {Boolean, 24, 4},
+          local0 -> {Object(class0), -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Object(class0), -12, 4},
+          local3 -> {Boolean, -16, 4},
+          local4 -> {Boolean, -20, 4}
+        }
+      }
+    }
+  },
+  class2 -> {
+    VariableTable {},
+    MethodTable {
+      class2 -> {
+        None,
+        20,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          local0 -> {Object(class0), -4, 4},
+          local1 -> {Boolean, -8, 4},
+          local2 -> {Object(class1), -12, 4},
+          local3 -> {Integer, -16, 4},
+          local4 -> {Object(class1), -20, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        16,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          arg3 -> {Boolean, 24, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Integer, -12, 4},
+          local3 -> {Integer, -16, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/21.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        8,
+        VariableTable {
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Integer, 0, 4},
+      member1 -> {Integer, 4, 4},
+      member2 -> {Boolean, 8, 4},
+      member3 -> {Boolean, 12, 4},
+      member4 -> {Integer, 16, 4},
+      member5 -> {Integer, 20, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        68,
+        VariableTable {
+          i0 -> {Integer, -4, 4},
+          i1 -> {Integer, -8, 4},
+          i10 -> {Integer, -44, 4},
+          i11 -> {Integer, -48, 4},
+          i12 -> {Integer, -52, 4},
+          i13 -> {Integer, -56, 4},
+          i14 -> {Integer, -60, 4},
+          i15 -> {Integer, -64, 4},
+          i16 -> {Integer, -68, 4},
+          i2 -> {Integer, -12, 4},
+          i3 -> {Integer, -16, 4},
+          i4 -> {Integer, -20, 4},
+          i5 -> {Integer, -24, 4},
+          i6 -> {Integer, -28, 4},
+          i7 -> {Integer, -32, 4},
+          i8 -> {Integer, -36, 4},
+          i9 -> {Integer, -40, 4}
+        }
+      }
+    }
+  },
+  class1 -> {
+    class0,
+    VariableTable {
+      member10 -> {Integer, 0, 4},
+      member11 -> {Integer, 4, 4},
+      member6 -> {Object(class0), 8, 4},
+      member7 -> {Integer, 12, 4},
+      member8 -> {Integer, 16, 4},
+      member9 -> {Integer, 20, 4}
+    },
+    MethodTable {
+      class1 -> {
+        None,
+        12,
+        VariableTable {
+          i0 -> {Integer, -8, 4},
+          i1 -> {Integer, -12, 4},
+          local0 -> {Object(class0), -4, 4}
+        }
+      }
+    }
+  },
+  class2 -> {
+    class0,
+    VariableTable {
+      member6 -> {Object(class1), 0, 4},
+      member7 -> {Boolean, 4, 4}
+    },
+    MethodTable {
+      class2 -> {
+        None,
+        16,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          i0 -> {Integer, -16, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Integer, -12, 4}
+        }
+      },
+      f0 -> {
+        None,
+        24,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          arg3 -> {Object(class1), 24, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Object(class1), -12, 4},
+          local3 -> {Object(class0), -16, 4},
+          local4 -> {Boolean, -20, 4},
+          local5 -> {Object(class0), -24, 4}
+        }
+      },
+      f1 -> {
+        Object(class0),
+        4,
+        VariableTable {
+          arg0 -> {Object(class1), 12, 4},
+          arg1 -> {Object(class0), 16, 4},
+          arg2 -> {Integer, 20, 4},
+          local0 -> {Boolean, -4, 4}
+        }
+      },
+      f2 -> {
+        None,
+        24,
+        VariableTable {
+          arg0 -> {Object(class1), 12, 4},
+          i0 -> {Integer, -12, 4},
+          i1 -> {Integer, -16, 4},
+          i2 -> {Integer, -20, 4},
+          i3 -> {Integer, -24, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Object(class1), -8, 4}
+        }
+      },
+      f3 -> {
+        Integer,
+        4,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          i0 -> {Integer, -4, 4}
+        }
+      },
+      f4 -> {
+        Integer,
+        20,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          i0 -> {Integer, -16, 4},
+          i1 -> {Integer, -20, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Object(class1), -8, 4},
+          local2 -> {Boolean, -12, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/22.good.lang:
+ClassTable {
+  Main -> {
+    VariableTable {},
+    MethodTable {
+      main -> {
+        None,
+        24,
+        VariableTable {
+          local0 -> {Object(class1), -4, 4},
+          local1 -> {Boolean, -8, 4},
+          local2 -> {Integer, -12, 4},
+          local3 -> {Integer, -16, 4},
+          local4 -> {Boolean, -20, 4},
+          local5 -> {Object(class0), -24, 4}
+        }
+      }
+    }
+  },
+  class0 -> {
+    VariableTable {
+      member0 -> {Integer, 0, 4},
+      member1 -> {Integer, 4, 4},
+      member2 -> {Boolean, 8, 4},
+      member3 -> {Boolean, 12, 4},
+      member4 -> {Integer, 16, 4},
+      member5 -> {Integer, 20, 4}
+    },
+    MethodTable {
+      class0 -> {
+        None,
+        24,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          arg3 -> {Integer, 24, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4},
+          local2 -> {Boolean, -12, 4},
+          local3 -> {Integer, -16, 4},
+          local4 -> {Boolean, -20, 4},
+          local5 -> {Boolean, -24, 4}
+        }
+      },
+      f0 -> {
+        None,
+        8,
+        VariableTable {
+          arg0 -> {Boolean, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          arg3 -> {Integer, 24, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4}
+        }
+      },
+      f1 -> {
+        Boolean,
+        16,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          arg3 -> {Boolean, 24, 4},
+          i0 -> {Integer, -12, 4},
+          i1 -> {Integer, -16, 4},
+          local0 -> {Boolean, -4, 4},
+          local1 -> {Boolean, -8, 4}
+        }
+      },
+      f2 -> {
+        None,
+        24,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Boolean, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          arg3 -> {Integer, 24, 4},
+          i0 -> {Integer, -24, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Boolean, -8, 4},
+          local2 -> {Integer, -12, 4},
+          local3 -> {Integer, -16, 4},
+          local4 -> {Integer, -20, 4}
+        }
+      }
+    }
+  },
+  class1 -> {
+    VariableTable {
+      member0 -> {Object(class0), 0, 4},
+      member1 -> {Object(class0), 4, 4},
+      member2 -> {Object(class0), 8, 4},
+      member3 -> {Integer, 12, 4},
+      member4 -> {Integer, 16, 4},
+      member5 -> {Integer, 20, 4}
+    },
+    MethodTable {
+      class1 -> {
+        None,
+        8,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Integer, -8, 4}
+        }
+      },
+      f0 -> {
+        Integer,
+        8,
+        VariableTable {
+          arg0 -> {Object(class0), 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Integer, 20, 4},
+          i0 -> {Integer, -8, 4},
+          local0 -> {Object(class0), -4, 4}
+        }
+      },
+      f1 -> {
+        None,
+        24,
+        VariableTable {
+          arg0 -> {Integer, 12, 4},
+          arg1 -> {Integer, 16, 4},
+          arg2 -> {Boolean, 20, 4},
+          arg3 -> {Integer, 24, 4},
+          local0 -> {Integer, -4, 4},
+          local1 -> {Object(class0), -8, 4},
+          local2 -> {Object(class0), -12, 4},
+          local3 -> {Integer, -16, 4},
+          local4 -> {Integer, -20, 4},
+          local5 -> {Boolean, -24, 4}
+        }
+      }
+    }
+  }
+}
+
+./lang < tests/0.bad.lang:
+Undefined variable.
+
+./lang < tests/1.bad.lang:
+Class does not exist.
+
+./lang < tests/2.bad.lang:
+Method does not exist.
+
+./lang < tests/3.bad.lang:
+Variable is not an object.
+
+./lang < tests/4.bad.lang:
+Method called with argument of incorrect type.
+
+./lang < tests/5.bad.lang:
+Return statement type does not match declared return type.
+
+./lang < tests/6.bad.lang:
+Method called with incorrect number of arguments.
+
+./lang < tests/7.bad.lang:
+The "Main" class has members.
+
+./lang < tests/8.bad.lang:
+Predicate of if statement is not boolean.
+
+./lang < tests/9.bad.lang:
+Return statement type does not match declared return type.
+
+./lang < tests/10.bad.lang:
+Class does not exist.
+
+./lang < tests/11.bad.lang:
+Expression types do not match.
+
+./lang < tests/12.bad.lang:
+Left and right hand sides of assignment types mismatch.
+
+./lang < tests/13.bad.lang:
+Method called with argument of incorrect type.
+
+./lang < tests/14.bad.lang:
+Undefined variable.
+
+./lang < tests/15.bad.lang:
+Variable is not an object.
+
+./lang < tests/16.bad.lang:
+Return statement type does not match declared return type.
+
+./lang < tests/17.bad.lang:
+Method does not exist.
+
+./lang < tests/18.bad.lang:
+Class member does not exist.
+
+./lang < tests/19.bad.lang:
+Undefined variable.
+
+./lang < tests/20.bad.lang:
+Class member does not exist.
+
+./lang < tests/21.bad.lang:
+Expression types do not match.
+
+./lang < tests/22.bad.lang:
+Method called with incorrect number of arguments.
+
+./lang < tests/23.bad.lang:
+Undefined variable.
+

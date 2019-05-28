@@ -1,0 +1,34 @@
+Main {
+
+
+    main() -> none {
+        integer i0, i1, i2;
+        
+        i0 = -98;
+        while i0 > -52 {
+             i0 = i0 + 2;
+        
+            print (false and true);
+            print 200;
+            i1 = 8960;
+            while 35 >= i1 {
+                 i1 = i1 / 4;
+            
+                print 195;
+            }
+        }
+        i2 = 87;
+        while i2 >= 241 {
+             i2 = i2 - -7;
+        
+            print 167;
+            print 142;
+        }
+        print (false and true);
+        print 99 * -63;
+
+    }
+
+
+}
+
