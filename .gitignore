@@ -1,1 +1,16 @@
 **/.DS_Store
+**/*.swp
+**/*.dSYM/
+
+**/calculator
+**/tree
+**/lang
+
+**/*.o
+**/*.output
+**/ast.*
+
+**/parser*
+!**/parser.y
+**/lexer*
+!**/lexer.l
