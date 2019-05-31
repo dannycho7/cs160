@@ -62,40 +62,103 @@ void typeError(TypeErrorCode code) {
   exit(1);
 }
 
+int getVTSize(VariableTable* vt) {
+  int size = 0;
+  std::map<std::string, VariableInfo>::iterator vt_it;
+  for (vt_it = vt->begin(); vt_it != vt->end(); vt_it++)
+    size += vt_it->second.size;
+  return size;
+}
+
 // TypeCheck Visitor Functions: These are the functions you will
 // complete to build the symbol table and type check the program.
 // Not all functions must have code, many may be left empty.
 
 void TypeCheck::visitProgramNode(ProgramNode* node) {
-  // WRITEME: Replace with code if necessary
+  this->classTable = new ClassTable();
+  node->visit_children(this);
 }
 
 void TypeCheck::visitClassNode(ClassNode* node) {
-  // WRITEME: Replace with code if necessary
+  this->currentMethodTable = new MethodTable();
+  this->currentVariableTable = new VariableTable();
+  this->currentClassName = node->identifier_1->name;
+  this->currentMemberOffset = 0;
+  node->visit_children(this);
+  if (node->declaration_list) {
+    for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
+      DeclarationNode* dn = *dn_it;
+      for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
+        VariableInfo vi = {{dn->type->basetype, dn->type->objectClassName}, this->currentMemberOffset, 4};
+        (*this->currentVariableTable)[(*id_it)->name] = vi;
+        this->currentMemberOffset += 4;
+      }
+    }
+  }
+  std::string superClassName = (node->identifier_2 == NULL) ? "" : node->identifier_2->name;
+  int membersSize = getVTSize(this->currentVariableTable);
+  ClassInfo ci = {superClassName, this->currentMethodTable, this->currentVariableTable, membersSize};
+  (*this->classTable)[this->currentClassName] = ci;
 }
 
 void TypeCheck::visitMethodNode(MethodNode* node) {
-  // WRITEME: Replace with code if necessary
+  this->currentParameterOffset = 12;
+  VariableTable* vt_before = this->currentVariableTable;
+  this->currentVariableTable = new VariableTable();
+  node->visit_children(this);
+  std::list<CompoundType>* parameters = new std::list<CompoundType>();
+  int localsSize = getVTSize(this->currentVariableTable);
+  for (std::list<ParameterNode*>::iterator pl_it = node->parameter_list->begin(); pl_it != node->parameter_list->end(); pl_it++) {
+    VariableInfo param_vi = (*this->currentVariableTable)[(*pl_it)->identifier->name];
+    parameters->push_back(param_vi.type);
+    localsSize -= param_vi.size;
+  }
+  MethodInfo mi = {{node->type->basetype, node->type->objectClassName}, this->currentVariableTable, parameters, localsSize};
+  (*this->currentMethodTable)[node->identifier->name] = mi;
+  this->currentVariableTable = vt_before;
 }
 
 void TypeCheck::visitMethodBodyNode(MethodBodyNode* node) {
-  // WRITEME: Replace with code if necessary
+  this->currentLocalOffset = -4;
+  node->visit_children(this);
+  if (node->returnstatement) {
+    node->basetype = node->returnstatement->basetype;
+    node->objectClassName = node->returnstatement->objectClassName;
+  } else {
+    node->basetype = bt_none;
+  }
+  if (node->declaration_list) {
+    for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
+      DeclarationNode* dn = *dn_it;
+      for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
+        VariableInfo vi = {{dn->type->basetype, dn->type->objectClassName}, this->currentLocalOffset, 4};
+        (*this->currentVariableTable)[(*id_it)->name] = vi;
+        this->currentLocalOffset -= 4;
+      }
+    }
+  }
 }
 
 void TypeCheck::visitParameterNode(ParameterNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  CompoundType ct = {node->type->basetype, node->type->objectClassName};
+  VariableInfo param_vi = {ct, this->currentParameterOffset, 4};
+  (*this->currentVariableTable)[node->identifier->name] = param_vi;
+  this->currentParameterOffset += 4;
 }
 
 void TypeCheck::visitDeclarationNode(DeclarationNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
 }
 
 void TypeCheck::visitReturnStatementNode(ReturnStatementNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  node->basetype = node->expression->basetype;
+  node->objectClassName = node->expression->objectClassName;
 }
 
 void TypeCheck::visitAssignmentNode(AssignmentNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
 }
 
 void TypeCheck::visitCallNode(CallNode* node) {
@@ -187,19 +250,21 @@ void TypeCheck::visitNewNode(NewNode* node) {
 }
 
 void TypeCheck::visitIntegerTypeNode(IntegerTypeNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->basetype = bt_integer;
 }
 
 void TypeCheck::visitBooleanTypeNode(BooleanTypeNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->basetype = bt_boolean;
 }
 
 void TypeCheck::visitObjectTypeNode(ObjectTypeNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  node->basetype = bt_object;
+  node->objectClassName = node->identifier->name;  
 }
 
 void TypeCheck::visitNoneNode(NoneNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->basetype = bt_none;
 }
 
 void TypeCheck::visitIdentifierNode(IdentifierNode* node) {
