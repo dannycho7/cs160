@@ -84,21 +84,20 @@ void TypeCheck::visitClassNode(ClassNode* node) {
   this->currentVariableTable = new VariableTable();
   this->currentClassName = node->identifier_1->name;
   this->currentMemberOffset = 0;
+  std::string superClassName = (node->identifier_2 == NULL) ? "" : node->identifier_2->name;
+  int membersSize = getVTSize(this->currentVariableTable);
+  ClassInfo ci = {superClassName, this->currentMethodTable, this->currentVariableTable, membersSize};
+  (*this->classTable)[this->currentClassName] = ci;
   node->visit_children(this);
   if (node->declaration_list) {
     for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
       DeclarationNode* dn = *dn_it;
       for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
-        VariableInfo vi = {{dn->type->basetype, dn->type->objectClassName}, this->currentMemberOffset, 4};
-        (*this->currentVariableTable)[(*id_it)->name] = vi;
+        (*this->currentVariableTable)[(*id_it)->name].offset = this->currentMemberOffset;
         this->currentMemberOffset += 4;
       }
     }
   }
-  std::string superClassName = (node->identifier_2 == NULL) ? "" : node->identifier_2->name;
-  int membersSize = getVTSize(this->currentVariableTable);
-  ClassInfo ci = {superClassName, this->currentMethodTable, this->currentVariableTable, membersSize};
-  (*this->classTable)[this->currentClassName] = ci;
 }
 
 void TypeCheck::visitMethodNode(MethodNode* node) {
@@ -120,18 +119,16 @@ void TypeCheck::visitMethodNode(MethodNode* node) {
 
 void TypeCheck::visitMethodBodyNode(MethodBodyNode* node) {
   this->currentLocalOffset = -4;
+  node->visit_children(this);
   if (node->declaration_list) {
     for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
       DeclarationNode* dn = *dn_it;
-      dn->accept(this);
       for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
-        VariableInfo vi = {{dn->type->basetype, dn->type->objectClassName}, this->currentLocalOffset, 4};
-        (*this->currentVariableTable)[(*id_it)->name] = vi;
+        (*this->currentVariableTable)[(*id_it)->name].offset = this->currentLocalOffset;
         this->currentLocalOffset -= 4;
       }
     }
   }
-  node->visit_children(this);
   if (node->returnstatement) {
     node->basetype = node->returnstatement->basetype;
     node->objectClassName = node->returnstatement->objectClassName;
@@ -150,6 +147,10 @@ void TypeCheck::visitParameterNode(ParameterNode* node) {
 
 void TypeCheck::visitDeclarationNode(DeclarationNode* node) {
   node->visit_children(this);
+  for (std::list<IdentifierNode*>::iterator id_it = node->identifier_list->begin(); id_it != node->identifier_list->end(); id_it++) {
+    VariableInfo vi = {{node->type->basetype, node->type->objectClassName}, -1, 4};
+    (*this->currentVariableTable)[(*id_it)->name] = vi;
+  }
 }
 
 void TypeCheck::visitReturnStatementNode(ReturnStatementNode* node) {
