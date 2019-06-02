@@ -120,22 +120,23 @@ void TypeCheck::visitMethodNode(MethodNode* node) {
 
 void TypeCheck::visitMethodBodyNode(MethodBodyNode* node) {
   this->currentLocalOffset = -4;
-  node->visit_children(this);
-  if (node->returnstatement) {
-    node->basetype = node->returnstatement->basetype;
-    node->objectClassName = node->returnstatement->objectClassName;
-  } else {
-    node->basetype = bt_none;
-  }
   if (node->declaration_list) {
     for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
       DeclarationNode* dn = *dn_it;
+      dn->accept(this);
       for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
         VariableInfo vi = {{dn->type->basetype, dn->type->objectClassName}, this->currentLocalOffset, 4};
         (*this->currentVariableTable)[(*id_it)->name] = vi;
         this->currentLocalOffset -= 4;
       }
     }
+  }
+  node->visit_children(this);
+  if (node->returnstatement) {
+    node->basetype = node->returnstatement->basetype;
+    node->objectClassName = node->returnstatement->objectClassName;
+  } else {
+    node->basetype = bt_none;
   }
 }
 
