@@ -1,4 +1,6 @@
 #include "typecheck.hpp"
+#define MAIN_CLASS "Main"
+#define MAIN_METHOD "main"
 
 // Defines the function used to throw type errors. The possible
 // type errors are defined as an enumeration in the header file.
@@ -148,6 +150,28 @@ MethodInfo* validateMethodCall(ClassTable* ct, std::string className, std::strin
 void TypeCheck::visitProgramNode(ProgramNode* node) {
   this->classTable = new ClassTable();
   node->visit_children(this);
+  std::map<std::string, ClassInfo>::iterator ct_it;
+  if ((ct_it = this->classTable->find(MAIN_CLASS)) == this->classTable->end()) {
+    typeError(no_main_class);
+    exit(0);
+  } else {
+    ClassInfo main_ci = ct_it->second;
+    if (main_ci.members->size() > 0) {
+      typeError(main_class_members_present);
+      exit(0);
+    }
+    std::map<std::string, MethodInfo>::iterator mt_it;
+    if ((mt_it = main_ci.methods->find(MAIN_METHOD)) == main_ci.methods->end()) {
+      typeError(no_main_method);
+      exit(0);
+    } else {
+      MethodInfo main_mi = mt_it->second;
+      if (main_mi.returnType.baseType != bt_none || main_mi.parameters->size() != 0) {
+        typeError(main_method_incorrect_signature);
+        exit(0);
+      }
+    }
+  }
 }
 
 void TypeCheck::visitClassNode(ClassNode* node) {
@@ -156,6 +180,10 @@ void TypeCheck::visitClassNode(ClassNode* node) {
   this->currentClassName = node->identifier_1->name;
   this->currentMemberOffset = 0;
   std::string superClassName = (node->identifier_2 == NULL) ? "" : node->identifier_2->name;
+  if (!superClassName.empty() && this->classTable->find(superClassName) == this->classTable->end()) {
+    typeError(undefined_class);
+    exit(0);
+  }
   int membersSize = getVTSize(this->currentVariableTable);
   ClassInfo ci = {superClassName, this->currentMethodTable, this->currentVariableTable, membersSize};
   (*this->classTable)[this->currentClassName] = ci;
@@ -185,6 +213,14 @@ void TypeCheck::visitMethodNode(MethodNode* node) {
   }
   MethodInfo mi = {{node->type->basetype, node->type->objectClassName}, this->currentVariableTable, parameters, localsSize};
   (*this->currentMethodTable)[node->identifier->name] = mi;
+  if (node->type->basetype != node->methodbody->basetype || node->type->objectClassName != node->methodbody->objectClassName) {
+    typeError(return_type_mismatch);
+    exit(0);
+  }
+  if (node->identifier->name == this->currentClassName && node->type->basetype != bt_none) {
+    typeError(constructor_returns_type);
+    exit(0);
+  }
   this->currentVariableTable = vt_before;
 }
 
@@ -219,6 +255,10 @@ void TypeCheck::visitParameterNode(ParameterNode* node) {
 void TypeCheck::visitDeclarationNode(DeclarationNode* node) {
   node->visit_children(this);
   for (std::list<IdentifierNode*>::iterator id_it = node->identifier_list->begin(); id_it != node->identifier_list->end(); id_it++) {
+    if (node->type->basetype == bt_object && this->classTable->find(node->type->objectClassName) == this->classTable->end()) {
+      typeError(undefined_class);
+      exit(0);
+    }
     VariableInfo vi = {{node->type->basetype, node->type->objectClassName}, -1, 4};
     (*this->currentVariableTable)[(*id_it)->name] = vi;
   }
@@ -232,94 +272,221 @@ void TypeCheck::visitReturnStatementNode(ReturnStatementNode* node) {
 
 void TypeCheck::visitAssignmentNode(AssignmentNode* node) {
   node->visit_children(this);
+  CompoundType ct;
+  VariableInfo* vi;
+  if (node->identifier_2 == NULL) {
+    vi = NULL;
+    std::string variableName = node->identifier_1->name;
+    if ((vi = findVariable(this->currentVariableTable, variableName)) == NULL
+      && (vi = findMember(this->classTable, this->currentClassName, variableName)) == NULL) {
+      typeError(undefined_variable);
+      exit(0);
+    }
+  } else {
+    vi = getObjectVI(this->classTable, this->currentVariableTable, this->currentClassName, node->identifier_1->name);
+    if ((vi = findMember(this->classTable, vi->type.objectClassName, node->identifier_2->name)) == NULL) {
+      typeError(undefined_member);
+      exit(0);
+    }
+  }
+  ct = vi->type;
+  if (ct.baseType != node->expression->basetype || ct.objectClassName != node->expression->objectClassName) {
+    typeError(assignment_type_mismatch);
+    exit(0);
+  }
 }
 
 void TypeCheck::visitCallNode(CallNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  node->basetype = node->methodcall->basetype;
+  node->objectClassName = node->methodcall->objectClassName;  
 }
 
 void TypeCheck::visitIfElseNode(IfElseNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression->basetype != bt_boolean) {
+    typeError(if_predicate_type_mismatch);
+    exit(0);
+  }
 }
 
 void TypeCheck::visitWhileNode(WhileNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression->basetype != bt_boolean) {
+    typeError(while_predicate_type_mismatch);
+    exit(0);
+  }
 }
 
 void TypeCheck::visitDoWhileNode(DoWhileNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression->basetype != bt_boolean) {
+    typeError(do_while_predicate_type_mismatch);
+    exit(0);
+  }
 }
 
 void TypeCheck::visitPrintNode(PrintNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
 }
 
 void TypeCheck::visitPlusNode(PlusNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression_1->basetype != bt_integer || node->expression_2->basetype != bt_integer) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_integer;
 }
 
 void TypeCheck::visitMinusNode(MinusNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression_1->basetype != bt_integer || node->expression_2->basetype != bt_integer) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_integer;
 }
 
 void TypeCheck::visitTimesNode(TimesNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression_1->basetype != bt_integer || node->expression_2->basetype != bt_integer) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_integer;
 }
 
 void TypeCheck::visitDivideNode(DivideNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression_1->basetype != bt_integer || node->expression_2->basetype != bt_integer) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_integer;
 }
 
 void TypeCheck::visitGreaterNode(GreaterNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression_1->basetype != bt_integer || node->expression_2->basetype != bt_integer) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_boolean;
 }
 
 void TypeCheck::visitGreaterEqualNode(GreaterEqualNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression_1->basetype != bt_integer || node->expression_2->basetype != bt_integer) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_boolean;
 }
 
 void TypeCheck::visitEqualNode(EqualNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (!((node->expression_1->basetype == bt_integer && node->expression_2->basetype == bt_integer)
+    || (node->expression_1->basetype == bt_boolean && node->expression_2->basetype == bt_boolean))) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_boolean;
 }
 
 void TypeCheck::visitAndNode(AndNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression_1->basetype != bt_boolean || node->expression_2->basetype != bt_boolean) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_boolean;
 }
 
 void TypeCheck::visitOrNode(OrNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression_1->basetype != bt_boolean || node->expression_2->basetype != bt_boolean) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_boolean;
 }
 
 void TypeCheck::visitNotNode(NotNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression->basetype != bt_boolean) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_boolean;
 }
 
 void TypeCheck::visitNegationNode(NegationNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  if (node->expression->basetype != bt_integer) {
+    typeError(expression_type_mismatch);
+    exit(0);
+  }
+  node->basetype = bt_integer;
 }
 
 void TypeCheck::visitMethodCallNode(MethodCallNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  MethodInfo* mi;
+  if (node->identifier_2) {
+    VariableInfo* vi = getObjectVI(this->classTable, this->currentVariableTable, this->currentClassName, node->identifier_1->name);
+    mi = validateMethodCall(this->classTable, vi->type.objectClassName, node->identifier_2->name, node->expression_list);
+  } else {
+    mi = validateMethodCall(this->classTable, this->currentClassName, node->identifier_1->name, node->expression_list);
+  }
+  node->basetype = mi->returnType.baseType;
+  node->objectClassName = mi->returnType.objectClassName; 
 }
 
 void TypeCheck::visitMemberAccessNode(MemberAccessNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  VariableInfo* vi = getObjectVI(this->classTable, this->currentVariableTable, this->currentClassName, node->identifier_1->name);
+  if ((vi = findMember(this->classTable, vi->type.objectClassName, node->identifier_2->name)) == NULL) {
+    typeError(undefined_member);
+    exit(0);
+  } else {
+    node->basetype = vi->type.baseType;
+    node->objectClassName = vi->type.objectClassName;
+  }
 }
 
 void TypeCheck::visitVariableNode(VariableNode* node) {
-  // WRITEME: Replace with code if necessary
+  VariableInfo* vi = NULL;
+  std::string variableName = node->identifier->name;
+  if ((vi = findVariable(this->currentVariableTable, variableName)) == NULL
+    && (vi = findMember(this->classTable, this->currentClassName, variableName)) == NULL) {
+    typeError(undefined_variable);
+    exit(0);
+  } else {
+    node->basetype = vi->type.baseType;
+    node->objectClassName = vi->type.objectClassName;
+  }
 }
 
 void TypeCheck::visitIntegerLiteralNode(IntegerLiteralNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->basetype = bt_integer;
 }
 
 void TypeCheck::visitBooleanLiteralNode(BooleanLiteralNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->basetype = bt_boolean;
 }
 
 void TypeCheck::visitNewNode(NewNode* node) {
-  // WRITEME: Replace with code if necessary
+  node->visit_children(this);
+  std::string className = node->identifier->name;
+  if (this->classTable->find(className) == this->classTable->end()) {
+    typeError(undefined_class);
+    exit(0);
+  } else {
+    validateMethodCall(this->classTable, className, className, node->expression_list);
+    node->basetype = bt_object;
+    node->objectClassName = className;
+  }
 }
 
 void TypeCheck::visitIntegerTypeNode(IntegerTypeNode* node) {
