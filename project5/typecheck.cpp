@@ -182,6 +182,15 @@ void TypeCheck::visitClassNode(ClassNode* node) {
   }
 }
 
+bool isTypeOf(ClassTable* ct, std::string class_1, std::string class_2) {
+  while (class_1 != class_2) {
+    class_1 = (*ct)[class_1].superClassName;
+    if (class_1.empty())
+      return false;
+  }
+  return true;
+}
+
 void TypeCheck::visitMethodNode(MethodNode* node) {
   this->currentParameterOffset = 12;
   VariableTable* vt_before = this->currentVariableTable;
@@ -196,7 +205,8 @@ void TypeCheck::visitMethodNode(MethodNode* node) {
   }
   MethodInfo mi = {{node->type->basetype, node->type->objectClassName}, this->currentVariableTable, parameters, localsSize};
   (*this->currentMethodTable)[node->identifier->name] = mi;
-  if (node->type->basetype != node->methodbody->basetype || node->type->objectClassName != node->methodbody->objectClassName)
+  if (node->type->basetype != node->methodbody->basetype
+      || !isTypeOf(this->classTable, node->methodbody->objectClassName, node->type->objectClassName))
     typeError(return_type_mismatch);
   if (node->identifier->name == this->currentClassName && node->type->basetype != bt_none)
     typeError(constructor_returns_type);
