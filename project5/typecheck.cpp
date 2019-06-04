@@ -180,13 +180,11 @@ void TypeCheck::visitClassNode(ClassNode* node) {
   ClassInfo ci = {superClassName, this->currentMethodTable, this->currentVariableTable, membersSize};
   (*this->classTable)[this->currentClassName] = ci;
   node->visit_children(this);
-  if (node->declaration_list) {
-    for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
-      DeclarationNode* dn = *dn_it;
-      for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
-        (*this->currentVariableTable)[(*id_it)->name].offset = this->currentMemberOffset;
-        this->currentMemberOffset += 4;
-      }
+  for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
+    DeclarationNode* dn = *dn_it;
+    for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
+      (*this->currentVariableTable)[(*id_it)->name].offset = this->currentMemberOffset;
+      this->currentMemberOffset += 4;
     }
   }
 }
@@ -225,13 +223,11 @@ void TypeCheck::visitMethodNode(MethodNode* node) {
 void TypeCheck::visitMethodBodyNode(MethodBodyNode* node) {
   this->currentLocalOffset = -4;
   node->visit_children(this);
-  if (node->declaration_list) {
-    for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
-      DeclarationNode* dn = *dn_it;
-      for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
-        (*this->currentVariableTable)[(*id_it)->name].offset = this->currentLocalOffset;
-        this->currentLocalOffset -= 4;
-      }
+  for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
+    DeclarationNode* dn = *dn_it;
+    for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
+      (*this->currentVariableTable)[(*id_it)->name].offset = this->currentLocalOffset;
+      this->currentLocalOffset -= 4;
     }
   }
   if (node->returnstatement) {

@@ -56,9 +56,9 @@ ClassDeclList : ClassDeclList ClassDecl { $$ = $1; $$->push_back($2); }
               | ClassDecl { $$ = new std::list<ClassNode*>(); $$->push_back($1); }
               ;
 ClassDecl : T_IDENTIFIER OptExtend '{' MemberList MethodList '}' { $$ = new ClassNode($1, $2, $4, $5); }
-          | T_IDENTIFIER OptExtend '{' MemberList '}' { $$ = new ClassNode($1, $2, $4, NULL); }
-          | T_IDENTIFIER OptExtend '{' MethodList '}' { $$ = new ClassNode($1, $2, NULL, $4); }
-          | T_IDENTIFIER OptExtend '{' '}' { $$ = new ClassNode($1, $2, NULL, NULL); }
+          | T_IDENTIFIER OptExtend '{' MemberList '}' { $$ = new ClassNode($1, $2, $4, new std::list<MethodNode*>()); }
+          | T_IDENTIFIER OptExtend '{' MethodList '}' { $$ = new ClassNode($1, $2, new std::list<DeclarationNode*>(), $4); }
+          | T_IDENTIFIER OptExtend '{' '}' { $$ = new ClassNode($1, $2, new std::list<DeclarationNode*>(), new std::list<MethodNode*>()); }
           ;
 OptExtend : T_EXTENDS T_IDENTIFIER { $$ = $2; }
           | %empty { $$ = NULL; }
@@ -95,9 +95,9 @@ Parameter : Type T_IDENTIFIER { $$ = new ParameterNode($1, $2); }
 MethodDefn : '{' Body '}' { $$ = $2; }
            ;
 Body : DeclList StmtList OptReturn { $$ = new MethodBodyNode($1, $2, $3); }
-     | DeclList OptReturn { $$ = new MethodBodyNode($1, NULL, $2); }
-     | StmtList OptReturn { $$ = new MethodBodyNode(NULL, $1, $2); }
-     | OptReturn { $$ = new MethodBodyNode(NULL, NULL, $1); }
+     | DeclList OptReturn { $$ = new MethodBodyNode($1, new std::list<StatementNode*>(), $2); }
+     | StmtList OptReturn { $$ = new MethodBodyNode(new std::list<DeclarationNode*>(), $1, $2); }
+     | OptReturn { $$ = new MethodBodyNode(new std::list<DeclarationNode*>(), new std::list<StatementNode*>(), $1); }
      ;
 DeclList : DeclList Decl { $$ = $1; $$->push_back($2); }
          | Decl { $$ = new std::list<DeclarationNode*>(); $$->push_back($1); }
