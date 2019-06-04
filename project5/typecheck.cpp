@@ -146,11 +146,11 @@ MethodInfo* validateMethodCall(ClassTable* ct, std::string className, std::strin
 
 MethodInfo* validateConstructorCall(ClassTable* ct, std::string className, std::list<ExpressionNode*>* expression_list) {
   ClassInfo ci = ct->find(className)->second;
-  if (_findMethodInCI(ci, className) == NULL) {
-    if (expression_list->size() == 0)
-      return NULL;
-  } else
+  if (_findMethodInCI(ci, className) != NULL)
     return validateMethodCall(ct, className, className, expression_list);
+  else if (expression_list->size() > 0)
+    typeError(argument_number_mismatch);
+  return NULL;
 }
 
 // TypeCheck Visitor Functions: These are the functions you will
