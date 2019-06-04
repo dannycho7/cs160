@@ -72,6 +72,15 @@ int getVTSize(VariableTable* vt) {
   return size;
 }
 
+bool isTypeOf(ClassTable* ct, std::string class_1, std::string class_2) {
+  while (class_1 != class_2) {
+    class_1 = (*ct)[class_1].superClassName;
+    if (class_1.empty())
+      return false;
+  }
+  return true;
+}
+
 void* findInClass(ClassTable* ct, std::string className, std::string name, void* (*findInClassInfo)(ClassInfo, std::string)) {
   void* vi = NULL;
   std::map<std::string, ClassInfo>::iterator ct_it;
@@ -126,7 +135,8 @@ MethodInfo* validateMethodCall(ClassTable* ct, std::string className, std::strin
   std::list<CompoundType>::iterator expected_args_it = mi->parameters->begin();
   std::list<ExpressionNode*>::iterator args_it = expression_list->begin();
   while (expected_args_it != mi->parameters->end() && args_it != expression_list->end()) {
-    if ((*expected_args_it).baseType != (*args_it)->basetype || (*expected_args_it).objectClassName != (*args_it)->objectClassName)
+    if ((*expected_args_it).baseType != (*args_it)->basetype
+        || !isTypeOf(ct, (*args_it)->objectClassName, (*expected_args_it).objectClassName))
       typeError(argument_type_mismatch);
     expected_args_it++;
     args_it++;
@@ -187,15 +197,6 @@ void TypeCheck::visitClassNode(ClassNode* node) {
       this->currentMemberOffset += 4;
     }
   }
-}
-
-bool isTypeOf(ClassTable* ct, std::string class_1, std::string class_2) {
-  while (class_1 != class_2) {
-    class_1 = (*ct)[class_1].superClassName;
-    if (class_1.empty())
-      return false;
-  }
-  return true;
 }
 
 void TypeCheck::visitMethodNode(MethodNode* node) {
