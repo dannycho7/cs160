@@ -1,0 +1,330 @@
+class0 {
+    integer	member0;
+    boolean	member1;
+
+    class0(integer arg0, boolean arg1, integer arg2, integer arg3) -> none {
+        integer local0;
+        boolean local1;
+        boolean local2;
+        integer local3;
+        
+        member1 =  178> 164 - 254;
+        member0 = 179;
+        local1 = false and false;
+        local0 = 246 - 56;
+        local3 = 198;
+        local2 = false and (true);
+        
+        if local1 {
+            local1 = local2;
+            local0 = 249;
+        } else {
+            local2 = false;
+        }
+        
+
+    }
+
+
+}
+
+class1 {
+
+
+    class1(boolean arg0, boolean arg1, boolean arg2, integer arg3, integer arg4) -> none {
+        integer local0;
+        integer local1;
+        integer local2;
+        integer local3;
+        
+        local1 = 17;
+        local0 = 97 + 216;
+        local3 = 19 / 118;
+        local2 = 61;
+        
+        local3 = 181;
+        local3 = arg3;
+        print 107;
+        local1 = 67 - local0;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        class1 local0;
+        boolean local1;
+        class0 local2;
+        class1 local3;
+        integer i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19;
+        
+        local1 = false and true;
+        local0 = new class1(not (false), (not (true)), (false) and 7 > 195, 247, (110) * 153);
+        local3 = new class1(false and false, 4 * 179 equals 188 / 49, 216 > 71 and false, 230 * 232 * 127, -166 / 159);
+        local2 = new class0(254, 165 >= 103, 226, (222));
+        
+        i0 = 900;
+        while i0 >= 100 {
+             i0 = i0 / 3;
+        
+            i1 = -56;
+            while 65480 > i1 {
+                 i1 = i1 * 4;
+            
+                i2 = 87;
+                while 215 >= i2 {
+                     i2 = i2 + 8;
+                
+                    print local1;
+                }
+            }
+            if local1 {
+                local2.member1 = true or local1;
+            }
+            
+            if true {
+                print true;
+                local2.member0 = 104;
+            } else {
+                local2.member1 = local1 and false;
+            }
+            
+        }
+        i3 = -34;
+        while i3 >= -43 {
+             i3 = i3 - 9;
+        
+            i4 = 24;
+            while i4 > 12 {
+                 i4 = i4 / 2;
+            
+                i5 = 4050;
+                while i5 >= 50 {
+                     i5 = i5 / 3;
+                
+                    i6 = -67;
+                    while 87 >= i6 {
+                         i6 = i6 - -7;
+                    
+                        local1 = 160 - 163 >=-144 ;
+                    }
+                }
+            }
+            local1 = true;
+        }
+        print local1;
+        if local1 {
+            print 175 - 241;
+            print local1;
+        } else {
+            i7 = 69;
+            while 259 >= i7 {
+                 i7 = i7 - -10;
+            
+                print 21;
+            }
+            print not (true);
+            print local1;
+        }
+        
+        local2.member1 = true;
+        if local1 and false {
+            i8 = 18944;
+            while i8 >= 74 {
+                 i8 = i8 / 2;
+            
+                i9 = 34;
+                while 66 >= i9 {
+                     i9 = i9 * 2;
+                
+                    if not (local1) {
+                        if false {
+                            local1 = local1;
+                            local1 = (178) >= 68 - 68 ;
+                        } else {
+                            print 90;
+                            if false {
+                                if false {
+                                    if false {
+                                        print local1;
+                                        if local1 {
+                                            local1 = local1;
+                                            i10 = 69;
+                                            while 126 >= i10 {
+                                                 i10 = i10 + 3;
+                                            
+                                                print 66;
+                                                local1 = local1 or true;
+                                            }
+                                        }
+                                        
+                                        i11 = -33;
+                                        while i11 > -45 {
+                                             i11 = i11 + -6;
+                                        
+                                            if not (false) {
+                                                if local1 {
+                                                    if true {
+                                                        if local1 {
+                                                            print (122) * 84;
+                                                        }
+                                                        
+                                                    } else {
+                                                        i12 = -56;
+                                                        while -40 > i12 {
+                                                             i12 = i12 * 4;
+                                                        
+                                                            local1 = (local1);
+                                                        }
+                                                        print 180 + 34 > 15;
+                                                    }
+                                                    
+                                                } else {
+                                                    i13 = 33;
+                                                    while i13 >= -114 {
+                                                         i13 = i13 - 7;
+                                                    
+                                                        i14 = -28;
+                                                        while 1048548 >= i14 {
+                                                             i14 = i14 * 4;
+                                                        
+                                                            if 94 equals 128 {
+                                                                print (119) / 22 * 64;
+                                                            } else {
+                                                                if local1 {
+                                                                    print 96 > 155;
+                                                                    print true;
+                                                                }
+                                                                
+                                                            }
+                                                            
+                                                        }
+                                                    }
+                                                }
+                                                
+                                            } else {
+                                                i15 = -44;
+                                                while 64 > i15 {
+                                                     i15 = i15 - -6;
+                                                
+                                                    print 215;
+                                                }
+                                            }
+                                            
+                                            local2.member0 = (92) * 179;
+                                            local1 = true;
+                                        }
+                                    } else {
+                                        print 203;
+                                    }
+                                    
+                                    print 0 - 249 - 49;
+                                } else {
+                                    if true {
+                                        if local1 or local1 {
+                                            if local1 {
+                                                i16 = -53;
+                                                while i16 > -123 {
+                                                     i16 = i16 - 7;
+                                                
+                                                    if local1 {
+                                                        print 157;
+                                                        if local1 {
+                                                            local1 = local1;
+                                                        }
+                                                        
+                                                    } else {
+                                                        local2.member1 = true or (local1);
+                                                    }
+                                                    
+                                                }
+                                            } else {
+                                                local2.member0 = -161;
+                                                if local1 {
+                                                    if 14 * 219 >=46  {
+                                                        print 155;
+                                                    } else {
+                                                        print 161 + 140 - 119;
+                                                        i17 = 41;
+                                                        while i17 >= 5 {
+                                                             i17 = i17 - 9;
+                                                        
+                                                            if 109 >= 223 {
+                                                                if false {
+                                                                    i18 = 245760;
+                                                                    while i18 > 15 {
+                                                                         i18 = i18 / 4;
+                                                                    
+                                                                        print true;
+                                                                    }
+                                                                }
+                                                                
+                                                                local1 = local1;
+                                                            } else {
+                                                                i19 = 43740;
+                                                                while i19 >= 60 {
+                                                                     i19 = i19 / 3;
+                                                                
+                                                                    print local1;
+                                                                    local1 = local1 or false;
+                                                                }
+                                                                print local1;
+                                                            }
+                                                            
+                                                        }
+                                                        print 199;
+                                                    }
+                                                    
+                                                }
+                                                
+                                                local1 = local1;
+                                            }
+                                            
+                                            local1 = local1;
+                                            local1 = false;
+                                        }
+                                        
+                                    } else {
+                                        print 34;
+                                    }
+                                    
+                                }
+                                
+                                local2.member1 = local1;
+                                print local1;
+                            } else {
+                                print false;
+                                local1 = not (false);
+                            }
+                            
+                        }
+                        
+                        local1 = 14 > 99;
+                    }
+                    
+                    print local1;
+                }
+                local2.member1 = local1 or 134 > 202;
+            }
+        } else {
+            print -202;
+        }
+        
+        if false {
+            if 137 / 89 >=54  {
+                print local1;
+            }
+            
+        }
+        
+        print local1;
+
+    }
+
+
+}
+

@@ -1,0 +1,10 @@
+Main {
+
+     main() -> none {
+     	    integer x, y;
+     	    x = 6 - 4;
+	    y = x * 4 - 1;
+     	    print x * y / 2;
+     }    
+
+}

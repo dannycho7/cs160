@@ -1,0 +1,197 @@
+class0 {
+    integer	member0;
+    integer	member1;
+
+    f0(boolean arg0, integer arg1, integer arg2, integer arg3) -> none {
+        boolean local0;
+        integer local1;
+        boolean local2;
+        boolean local3;
+        boolean local4;
+        boolean local5;
+        
+        local5 = (false);
+        local4 = true;
+        local1 = 1 - 78;
+        local0 = 144 * 208 >2 ;
+        local3 = false and true and 138 / 237 >46 ;
+        local2 = not (false);
+        
+        local1 = member1;
+        print member1;
+
+    }
+
+    class0(boolean arg0, integer arg1, integer arg2) -> none {
+        integer local0;
+        integer local1;
+        boolean local2;
+        boolean local3;
+        integer local4;
+        integer i0;
+        
+        member1 = 79 + 165;
+        member0 = ((202));
+        local4 = (150);
+        local1 = 208;
+        local0 = -249 * 155;
+        local3 = 233 >= 139;
+        local2 = 224 > 60;
+        
+        local1 = arg2;
+        i0 = 2025;
+        while i0 > 25 {
+             i0 = i0 / 3;
+        
+            local3 = arg0;
+            print local1;
+            local4 = 38;
+        }
+        local4 = -108;
+
+    }
+
+
+}
+
+class1 extends class0 {
+
+
+    f1(boolean arg0, class0 arg1, boolean arg2, class0 arg3, class0 arg4) -> boolean {
+        class0 local0;
+        
+        local0 = new class0(111 equals -58, 140, 60 * -21);
+        
+        print arg0;
+        print arg0;
+        print 179 * member0;
+        print local0.member1;
+        return (true);
+
+    }
+
+    f2(boolean arg0) -> none {
+        boolean local0;
+        integer local1;
+        boolean local2;
+        
+        local1 = 21;
+        local0 = false;
+        local2 = 149 > 98;
+        
+        print false;
+        local2 = true;
+
+    }
+
+    f3(class0 arg0, integer arg1, integer arg2) -> integer {
+        integer local0;
+        integer local1;
+        class0 local2;
+        
+        local1 = 134 * 229;
+        local0 = 81 * 205;
+        local2 = new class0((199 >= 199), 172, 160 * 223);
+        
+        print arg2 / local2.member1 + 238;
+        local2.f0(true, 49, arg2, member1);
+        local2.member1 = member1;
+        print false;
+        print 50 * 250;
+        return member0;
+
+    }
+
+    f4(integer arg0, boolean arg1, integer arg2, boolean arg3) -> integer {
+        boolean local0;
+        integer local1;
+        class0 local2;
+        
+        local1 = 4;
+        local0 = not (false);
+        local2 = new class0(false, 11, 132);
+        
+        print member0;
+        f2(local0);
+        f2(not (local0));
+        return 97;
+
+    }
+
+    f5(class0 arg0, class0 arg1, boolean arg2, class0 arg3, integer arg4) -> boolean {
+        boolean local0;
+        boolean local1;
+        integer local2;
+        integer local3;
+        class0 local4;
+        integer local5;
+        
+        local5 = 224 / 239;
+        local4 = new class0(false or true, 89 - 93, 221);
+        local1 = true and true;
+        local0 = 9 / 168 >= 243;
+        local3 = 43;
+        local2 = 151 - 187;
+        
+        local3 = f3(new class0(local0, 74, 201), 103, 40);
+        if arg2 {
+            print local3 * local3;
+            f2(false);
+        } else {
+            print arg2;
+        }
+        
+        print 231;
+        local2 = 155;
+        print local3;
+        return true and local1;
+
+    }
+
+    class1(integer arg0, integer arg1, boolean arg2, integer arg3) -> none {
+        integer local0;
+        boolean local1;
+        integer local2;
+        integer local3;
+        integer local4;
+        
+        class0(true and false and true, 79 * 74, ((127)));
+        local4 = 161;
+        local1 = false;
+        local0 = 249;
+        local3 = -206;
+        local2 = 67;
+        
+        local0 = arg3;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        
+        
+        if 6 > 234 * 70 {
+            if false {
+                print 87 - 53;
+            }
+            
+            if (false) {
+                print (16 + 6);
+            }
+            
+        }
+        
+        print false;
+        print true;
+
+    }
+
+
+}
+
+

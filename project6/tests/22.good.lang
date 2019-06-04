@@ -1,0 +1,30 @@
+classA {
+     integer x;
+
+     classA(integer val) -> none {
+         x = val;
+     }
+}
+
+classB extends classA {
+    boolean y;
+
+    classB(integer val1, boolean val2) -> none {
+    	x = val1;
+	y = val2;
+    }
+
+}
+
+
+Main {
+
+     main() -> none {
+	    classB b;
+
+	    b = new classB(12, true);
+	    print b.x;
+	    print b.y;
+     }
+
+}

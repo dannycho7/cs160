@@ -1,0 +1,123 @@
+class0 {
+
+
+    f0(integer arg0, integer arg1, integer arg2) -> integer {
+        integer local0;
+        
+        local0 = 227;
+        
+        return 156 - 99;
+
+    }
+
+    f1(boolean arg0, integer arg1, boolean arg2) -> boolean {
+        integer local0;
+        boolean local1;
+        boolean local2;
+        integer local3;
+        
+        local1 = false;
+        local0 = 194;
+        local3 = 7;
+        local2 = true;
+        
+        print arg1;
+        print local0;
+        local2 = true;
+        local1 = true;
+        return false;
+
+    }
+
+    class0(integer arg0, boolean arg1, boolean arg2, boolean arg3) -> none {
+        boolean local0;
+        boolean local1;
+        integer local2;
+        boolean local3;
+        integer local4;
+        integer local5;
+        integer i0;
+        
+        local5 = 48;
+        local4 = 0;
+        local1 = 114 >= 144;
+        local0 = 115 > 223;
+        local3 = false;
+        local2 = 233;
+        
+        print false and false;
+        i0 = 960;
+        while i0 > 15 {
+             i0 = i0 / 4;
+        
+            local0 = local1;
+            local1 = arg3 or local3;
+            local2 = local4;
+        }
+        local0 = local3;
+        print false;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        class0 local0;
+        integer i0, i1, i2, i3, i4, i5;
+        
+        local0 = new class0(197 / 234, false, -183 equals 144, 32 >= 93);
+        
+        print local0.f0(102, 235 * 31 / 237, -51) + 95;
+        i0 = 81;
+        while i0 >= -69 {
+             i0 = i0 + -6;
+        
+            print 95;
+            print true;
+        }
+        print true;
+        if false {
+            print true and false;
+        }
+        
+        print -(206);
+        i1 = 60;
+        while 19743 > i1 {
+             i1 = i1 * 3;
+        
+            i2 = 36;
+            while i2 >= 12 {
+                 i2 = i2 / 3;
+            
+                i3 = -74;
+                while 31 > i3 {
+                     i3 = i3 + 7;
+                
+                    print true;
+                    i4 = 8;
+                    while 128 >= i4 {
+                         i4 = i4 - -5;
+                    
+                        i5 = 53;
+                        while 205 > i5 {
+                             i5 = i5 - -8;
+                        
+                            print false;
+                        }
+                    }
+                }
+            }
+        }
+        print 245;
+        print local0.f1(46 >= 72, 62, true);
+
+    }
+
+
+}
+
+

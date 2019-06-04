@@ -1,0 +1,15 @@
+Main {
+
+     main() -> none {
+     	    integer x, y;
+     	    x = 1;
+	    y = x + 1;
+
+	    if y equals 2 {
+	       print 1;
+	    }
+	    print 0;
+
+     }    
+
+}

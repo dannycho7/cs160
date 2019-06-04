@@ -1,0 +1,33 @@
+classA {
+
+       f0(integer x) -> integer {
+       	    integer val;
+	    integer mod2;
+
+	    mod2 = x - (x / 2) * 2;
+
+       	    if mod2 equals 1 {
+	       val = x * x - 1;
+	    } else {
+	       val = x / 2;
+	    }
+
+	    return val	     ;  
+       }
+
+       doAll() -> none {
+       
+           print f0(f0(f0(f0(f0(5)))));
+
+       }
+
+}
+
+Main {
+
+     main() -> none {
+     	    classA a;
+	    a.doAll();
+     }
+
+}

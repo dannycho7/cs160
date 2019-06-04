@@ -1,0 +1,98 @@
+class0 {
+    boolean	member0;
+    integer	member1;
+    integer	member2;
+    boolean	member3;
+    boolean	member4;
+
+    f0(integer arg0, integer arg1) -> integer {
+        integer local0;
+        boolean local1;
+        boolean local2;
+        boolean local3;
+        integer local4;
+        
+        local4 = 248;
+        local1 = true or false;
+        local0 = 69;
+        local3 = 240 * 171 >19 ;
+        local2 = true;
+        
+        if 96 >= member2 {
+            print 113;
+            local4 = local0 + arg0 * arg1;
+            local3 = local3;
+        }
+        
+        local4 = local4;
+        local3 = false;
+        return local4 - member1;
+
+    }
+
+    class0() -> none {
+        boolean local0;
+        boolean local1;
+        boolean local2;
+        integer local3;
+        
+        member4 = (false);
+        member1 = 244;
+        member0 = false;
+        member3 = true;
+        member2 = 14;
+        local1 = false;
+        local0 = 46 / 134 >= 135;
+        local3 = 173 + 13;
+        local2 = true;
+        
+        print true;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        integer local0;
+        integer local1;
+        integer i0;
+        
+        local1 = 4;
+        local0 = 252;
+        
+        print local0;
+        local0 = 5;
+        local1 = 9;
+        print false;
+        i0 = -7;
+        while 121 > i0 {
+             i0 = i0 * 2;
+        
+            local0 = local1;
+            local0 = 27;
+        }
+        print 97 >= local0;
+        print 156;
+        local1 = 212;
+        print (172) - 224;
+        local1 = local1;
+        local0 = 116;
+        if (true) {
+            if true and false {
+                print 88;
+            }
+            
+        }
+        
+        print local1;
+        print 248 / -187;
+
+    }
+
+
+}
+

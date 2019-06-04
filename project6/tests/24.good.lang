@@ -1,0 +1,58 @@
+classA {
+     integer x;
+
+     classA(integer val) -> none {
+         x = val;
+     }
+
+     double() -> none {
+         x = x * 2;
+     }
+}
+
+classB extends classA {
+    integer x;
+
+    classB(integer val1, integer val2) -> none {
+        classA(val1);
+	x = val2;
+    }
+
+    double() -> none {
+        x = x * 2 - 1;
+    }
+}
+
+CastClass {
+
+    BtoA(classB b) -> classA {
+        return b;
+    }
+
+}
+
+Main {
+
+     main() -> none {
+	    classB b;
+	    classA a;
+	    CastClass c;
+
+	    b = new classB(4, 5);
+	    a = c.BtoA(b);
+
+	    print a.x;
+	    print b.x;
+
+	    a.double();
+
+	    print a.x;
+	    print b.x;
+
+	    b.double();
+
+	    print a.x;
+	    print b.x;
+     }
+
+}

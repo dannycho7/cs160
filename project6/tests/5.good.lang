@@ -1,0 +1,21 @@
+Main {
+
+     main() -> none {
+     	    integer x, y, z;
+	    
+     	    x = 1 + 2 + 3 - 4 + 5;
+	    y = x * x * x;
+	    z = 5 / x + 5 * x;
+
+	    x = (z + 1) * (z - 1) / 2;
+	    y = x * x / 100;
+	    z = (y - x) * (y + x);
+
+	    print x;
+	    print y;
+	    print z;
+	    
+
+     }    
+
+}

@@ -1,0 +1,53 @@
+class0 {
+    integer	member0;
+
+    class0() -> none {
+        integer local0;
+        integer local1;
+        integer local2;
+        integer local3;
+        boolean local4;
+        
+        member0 = 120;
+        local4 = true;
+        local1 = 129 / 174;
+        local0 = -219;
+        local3 = (142 + 200);
+        local2 = 7 * 62;
+        
+        print member0 - local1;
+        local4 = (local4);
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        integer local0;
+        boolean local1;
+        class0 local2;
+        class0 local3;
+        integer local4;
+        boolean local5;
+        
+        local5 = true;
+        local4 = 243;
+        local1 = false;
+        local0 = 149;
+        local3 = new class0();
+        local2 = new class0();
+        
+        local0 = local0 / 60;
+        print 68;
+        print false;
+        print 214;
+
+    }
+
+
+}
+

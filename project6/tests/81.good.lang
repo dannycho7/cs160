@@ -1,0 +1,123 @@
+class0 {
+    integer	member0;
+    integer	member1;
+    integer	member2;
+    integer	member3;
+    boolean	member4;
+    boolean	member5;
+
+    class0() -> none {
+        integer local0;
+        integer local1;
+        boolean local2;
+        integer local3;
+        boolean local4;
+        integer i0;
+        
+        member5 = not (true);
+        member4 = true;
+        member1 = 31;
+        member0 = 176;
+        member3 = 92 - 74;
+        member2 = 144;
+        local4 = not (true) and 4 >=105 + 3 ;
+        local1 = (251) / 94;
+        local0 = 110;
+        local3 = 13;
+        local2 = 11 >= 121;
+        
+        local2 = 75 > 119;
+        i0 = 24;
+        while 138 >= i0 {
+             i0 = i0 + 6;
+        
+            local0 = (129);
+            local3 = 149;
+            local4 = member4;
+        }
+        local3 = 201;
+
+    }
+
+
+}
+
+Main {
+
+
+    main() -> none {
+        boolean local0;
+        integer i0, i1, i2, i3;
+        
+        local0 = true;
+        
+        local0 = false;
+        print 145;
+        i0 = 210;
+        while i0 >= 70 {
+             i0 = i0 / 3;
+        
+            local0 = local0;
+            print true or (local0);
+        }
+        local0 = local0 and local0;
+        if false {
+            local0 = local0;
+            if local0 {
+                i1 = -6;
+                while i1 >= -138 {
+                     i1 = i1 - 6;
+                
+                    local0 = local0;
+                    local0 = 116 - 203 > 119;
+                    local0 = true;
+                }
+                local0 = local0;
+            } else {
+                local0 = not (true);
+                local0 = not (false);
+            }
+            
+        }
+        
+        local0 = true and local0;
+        print local0;
+        local0 = local0;
+        i2 = -19;
+        while i2 >= -61 {
+             i2 = i2 - 3;
+        
+            local0 = false;
+            local0 = local0;
+            if 154 > 39 {
+                local0 = local0;
+            } else {
+                print not (false);
+            }
+            
+        }
+        local0 = false;
+        i3 = 132;
+        while i3 >= 33 {
+             i3 = i3 / 2;
+        
+            local0 = true;
+        }
+        local0 = local0;
+        if false {
+            local0 = false;
+        }
+        
+        local0 = true;
+        local0 = local0;
+        print local0;
+        local0 = local0;
+        local0 = false;
+        local0 = local0;
+        local0 = true;
+
+    }
+
+
+}
+

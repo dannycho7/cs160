@@ -1,0 +1,568 @@
+/*;
+Software floating point implementation;
+
+These classes define objects for IEEE 754 single-precision floating-point;
+numbers, as well as standard operations on them. Though the implementation;
+imitates the number storage, the standard is not strictly implemented during;
+operations --- specifically, the guard, round, and sticky bits are ignored.;
+*/
+
+
+Float { /* Class defining float storage */
+    boolean sign  /* true if negative */;
+    integer exp   /* 8-bit exponent */;
+    integer frac  /* 23-bit mantissa (fraction) */;
+
+    /* Constructor: takes sign, (unbiased) exponent, and fraction */
+    Float(boolean s, integer e, integer f) -> none {
+        sign = s;
+	exp = e + 127;
+	frac = f;
+    }
+
+    /* Output function; no formatted output, so just print components */
+    printval() -> none {
+        print sign;
+	print exp - 127;
+	print frac;
+    }
+
+    /* Return a copy of this float object. */
+    copy() -> Float {
+        return new Float(sign, exp-127, frac);
+    }	
+}
+
+FloatOps { /* Class defining operations on floats */
+
+    /*;
+    Operations defined here:;
+        - add;
+	- subtract;
+	- multiply;
+	- divide;
+	- e^x (exponent base e);
+	- lnx (natural logarithm);
+	- power (exponent, arbitrary base);
+    */
+
+    add(Float f1, Float f2) -> Float {
+
+        /* Add f1 and f2. Full precision, but no guard, sticky, and round bits. */
+
+        Float x, y  /* x is larger number, y is smaller */;
+	Float result;
+	integer diff;
+	integer i;
+
+	/* Intialize objects */
+	result = new Float(false, 0, 0);
+
+	/* Compare exponents to determine which is smaller */
+	if f2.exp > f1.exp {
+	    x = f2.copy();
+	    y = f1.copy();
+	} else {
+	    x = f1.copy();
+	    y = f2.copy();
+	}
+	diff = x.exp - y.exp;
+
+	/* Add in implicit leading 1 to 24th bit */
+  	x.frac = 8388608 + x.frac;
+  	y.frac = 8388608 + y.frac;
+
+  	/* convert to negative value if sign bit is set */
+	if (x.sign) {
+    	    x.frac = -1 * x.frac;
+  	}
+  	if (y.sign) {
+    	    y.frac = -1 * y.frac;
+  	}
+  
+	/* Line up radix points by shifting smaller number right */
+  	i = diff;
+  	while (i > 0) {
+    	    i = i - 1;
+    	    y.frac = y.frac / 2  /* shift right one bit */;
+  	}
+  
+	/* Perform addition of mantissas; exponents are equal at this point */
+  	result.frac = x.frac + y.frac;
+  	result.exp = x.exp;
+  
+	/* If result is negative, convert to positive and set sign bit */
+  	if (0 > result.frac) {
+    	    result.frac = -1 * result.frac;
+    	    result.sign = true;
+  	} else {
+    	    result.sign = false;
+  	}
+  
+	/* Re-normalize result --- should have a 1 in bit 23 of mantissa */
+  	/* This means number will be larger than 2^23 (8388608) but smaller than 2^24 (16777216) */
+  	if not (result.frac equals 0) {
+	    while (8388608 > result.frac) {
+	        result.frac = result.frac * 2  /* shift left one bit */;
+		result.exp = result.exp - 1  /* decrement exponent */;
+	    }
+	    while (result.frac >= 16777216) {
+	        result.frac = result.frac / 2  /* shift right one bit */;
+		result.exp = result.exp + 1  /* increment exponent */;
+	    }
+	
+
+	    /* Finally, remove the leading one in bit 23, since it is implicit in 754 compliant numbers */
+	    result.frac = result.frac - 8388608;
+	} else {
+	    result.exp = 0;
+	}
+	
+	return result;
+    }
+
+
+    sub(Float f1, Float f2) -> Float {
+        
+	/* Subtract f1 - f2*/
+
+	/* Just use add, inverting f2's sign */
+	return add(f1, new Float(not f2.sign, f2.exp-127, f2.frac));
+    }
+
+
+    mult(Float f1, Float f2) -> Float {
+    
+        /* Return f1 * f2. */
+        Float result;
+        integer hi, hi1, hi2, lo, lo1, lo2, tmp;
+
+	/* Initialze objects */
+	result = new Float(false, 0, 0);
+
+	/* If either operand is zero, result should just be zero. */
+
+	if ((f1.exp equals 0) and (f1.frac equals 0)) or 
+	   ((f2.exp equals 0) and (f2.frac equals 0)) {
+	   
+            result.sign = false;
+	    result.exp = 0;
+	    result.frac = 0;
+        } else {  /* Both operands non-zero; do multiplication. */
+
+	    /* Sign is XOR of multiplicand signs */
+	    if (f1.sign or f2.sign) and not (f1.sign and f2.sign) {
+	        result.sign = true;
+	    } else {
+	        result.sign = false;
+	    }
+
+	    /* Exponents just add when multiplying */
+	    result.exp = f1.exp + f2.exp - 127  /* subtract out extra bias */;
+
+	    /* Fractions multiply. First, add in leading 1 */
+    	    f1.frac = f1.frac + 8388608;
+    	    f2.frac = f2.frac + 8388608;
+
+	    /* Now, we split the multiply into two integers so we don't lose precision. */
+	    /* Basically multiplying 2 24-bit values by splitting each into 2 12-bit words. */
+	    hi1 = f1.frac / 4096;
+    	    lo1 = f1.frac - (hi1 * 4096);
+    	    hi2 = f2.frac / 4096;
+    	    lo2 = f2.frac - (hi2 * 4096);
+	    
+	    /* Multiply hi*hi, hi*lo, and lo*hi (ignore lo*lo) */
+    	    hi = hi1 * hi2;
+    	    lo = hi1 * lo2 + hi2 * lo1;
+
+	    /* Add upper 12 bits of lo to hi (carry in) */
+    	    hi = hi + (lo / 4096);
+    	    lo = lo - (lo / 4096);
+
+	    /* Set result to 24 bits of hi */
+	    result.frac = hi;
+
+	    /* Normally would need to shift right by 23, but each operand was shifted right 
+	        by 12, so we actually need to shift left by 1 to renormalize. */
+	    result.exp = result.exp + 1;
+    
+	    /* Re-normalize result, as in add. Here, though, we have lower-order bits;
+	        to shift in whenever we do a left-shift. */    
+    	    if not (result.frac equals 0) {
+    	        while (8388608 > result.frac) {
+    		    result.frac = result.frac * 2            /* shift left one bit */;
+    		    result.exp = result.exp - 1    	     /* decrement exponent */;
+    		    result.frac = result.frac + (lo / 1024)  /* shift off 12th bit */;
+    		    lo = lo - (lo / 1024)     	      	     /* remove bit just used */;
+		    lo = lo * 2     			     /* shift everything else up one */;
+    		}
+    		while (result.frac >= 16777216) {
+    		    result.frac = result.frac / 2	/* shift right one bit */;
+    		    result.exp = result.exp + 1  	/* increment exponent */;
+    		}
+    	    }
+
+    	    /* Subtract off leading 1 */
+	    result.frac = result.frac - 8388608;
+
+	    /* Also, return operands to the way we found them */
+	    f1.frac = f1.frac - 8388608;
+	    f2.frac = f2.frac - 8388608;
+
+    	}
+
+    	return result;
+    }
+
+
+    div(Float f1, Float f2) -> Float {
+    
+        /* Return f1 / f2 */
+	Float result;
+	result = new Float(false, 0, 0);
+
+	/* Sign is XOR of multiplicand signs */
+	if (f1.sign or f2.sign) and not (f1.sign and f2.sign) {
+	    result.sign = true;
+	} else {
+	    result.sign = false;
+	}
+
+	/* Exponent is difference of exponents */
+	result.exp = f1.exp - f2.exp + 127  /* add in lost bias */;
+
+	/* Frac is quotient of input fractions. */
+	/* First, add in leading 1's */
+	f1.frac = f1.frac + 8388608;
+  	f2.frac = f2.frac + 8388608;
+
+	/* Shift divisor up 7 bits so precision doesn't completely suck */
+	f1.frac = f1.frac * 128;
+
+	/* Divide fractions */
+	result.frac = f1.frac / f2.frac;
+
+	/* Shift up 16 more bits to fully renormalize */
+	/* (Take from exponent to avoid losing bits) */
+	result.exp = result.exp + 16;
+
+	/* Return inputs to initial state */
+	f1.frac = f1.frac / 128;
+	f1.frac = f1.frac - 8388608;
+  	f2.frac = f2.frac - 8388608;
+
+    	/* Re-normalize result */
+    	if not (result.frac equals 0) {
+    	    while (8388608 > result.frac) {
+    	        result.frac = result.frac * 2   /* shift left one bit */;
+    		result.exp = result.exp - 1     /* decrement exponent */;
+
+    	    }
+    	    while (result.frac >= 16777216) {
+    	        result.frac = result.frac / 2	/* shift right one bit */;
+    		result.exp = result.exp + 1  	/* increment exponent */;
+    	    }
+    	}
+
+    	/* Subtract off leading 1 */
+	result.frac = result.frac - 8388608;
+
+    	return result	;
+    }
+
+    lt(Float f1, Float f2) -> boolean {
+
+        /* Return true iff f1 is less than f2. */
+  	boolean done, result;
+
+	/*
+	print 111111;
+	f1.printval();
+	f2.printval();
+	*/
+	done = false;
+	result = false;
+
+	/* If signs are different, positive number is bigger */
+	if f1.sign and not f2.sign {
+	    result = true;
+	    done = true;
+	}
+	if (not f1.sign) and f2.sign {
+	    result = false;
+	    done = true;
+	}
+
+	/* Check exponents */
+	if not done and (f2.exp > f1.exp) {
+	    result = true;
+	    done = true;
+	}
+	if not done and ( f1.exp > f2.exp) {
+	    result = false;
+	    done = true;
+	}
+
+	/* Check fractions */
+	if not done and (f2.frac > f1.frac) {
+	    result = true;
+	}
+	if not done and (f1.frac > f2.frac) {
+	    result = false;
+	}
+
+	/* If both numbers are negative, invert answer */
+	if f1.sign and f2.sign {
+	    result = not result;
+	}
+
+	return result;
+    }
+
+    exp(Float f) -> Float {
+
+        /* Return e^f using series approximation. */
+
+	integer i, val;
+	Float e, one, base, tmp;
+	Float result;
+	Float c2, c3, c4, c5, c6;
+
+	e = new Float(false, 1, 3012692)  /* value of e */;
+	one = new Float(false, 0, 0)  /* value of 1 */;
+	base = new Float(false, 0, 0)  /* will hold integer portion */;
+	result = new Float(false, 0, 0)	;
+
+	/* Get positive copy of f */
+	tmp = f.copy();
+	if tmp.sign {
+	    tmp.sign = false;
+	}
+
+	/* Make series coefficients; ci = 1/i */
+	c2 = new Float(false, -1, 0)       	/* 1/2 */;
+	c3 = new Float(false, -2, 2796203)  /* 1/3 */;
+	c4 = new Float(false, -2, 0)        /* 1/4 */;
+	c5 = new Float(false, -3, 5033165)	/* 1/5 */;
+	c6 = new Float(false, -3, 2796203)  /* 1/6 */;
+
+	/* Do integer portion with repeated multiplication */
+	while lt(one, tmp) {  /* while tmp > 1.0 */
+	    base = mult(base, e);
+	    tmp = sub(tmp, one);
+	}
+
+	/* Now do e^f.frac via series approximation;
+
+	/* x^6 */
+	result = mult(result, tmp);
+	result = mult(result, c6);
+	result = add(result, one);
+
+	/* x^5 */
+	result = mult(result, tmp);
+	result = mult(result, c5);
+	result = add(result, one);
+	
+	/* x^4 */
+	result = mult(result, tmp);
+	result = mult(result, c4);
+	result = add(result, one);
+
+	/* x^3 */
+	result = mult(result, tmp);
+	result = mult(result, c3);
+	result = add(result, one);
+
+	/* x^2 */
+	result = mult(result, tmp);
+	result = mult(result, c2);
+	result = add(result, one);
+
+	/* x^1 */
+	result = mult(result, tmp);
+	result = add(result, one);
+
+	/* Combine portions via multiply */
+	result = mult(result, base);
+
+	/* If sign is negative, do inverse of result */
+	if f.sign {
+	    result = div(one, result);
+	}
+
+	return result;
+    }
+
+
+    
+    ln(Float f) -> Float {
+
+        /* Return natural log of f. */
+	Float log2, x, base, result;
+	Float c2, c3, c4, c5, one;
+	integer i;
+
+	/* Use identify ln(2^exp * (1+f)) = exp*ln(2) + ln(1+f),
+	    and then approximate ln(1+f) using numeric series. */
+
+	/* Initialize constants and series coefficients */
+	log2 = new Float(false, -1, 3240472)  /* ln(2) */;
+	one = new Float(false, 0, 0);
+	c2 = new Float(false, -1, 0)        /* 1/2 */;
+	c3 = new Float(false, -1, 2796203)  /* 2/3 */;
+	c4 = new Float(false, -1, 4194304)  /* 3/4 */;
+	c5 = new Float(false, -1, 5033165)  /* 4/5 */;
+
+	/* Do exponent * ln(2) */
+
+	/* First, get value of the exponent in a float */
+	base = new Float(false, -127, 0)  /* 0 */;
+	i = f.exp - 127  /* true value of f's exponent */;
+	while i > 0 {
+	    base = add(base, one);
+	    i = i - 1;
+	}
+
+	/* Now, multiply by ln2 */
+	base = mult(base, log2);
+
+	/* Now do the ln(1+frac) part via series approximation */
+	x = new Float(false, 0, f.frac);
+	x = sub(x, one);
+
+	/* x^5 */
+	result = mult(x, c5);
+	result = add(one, result);
+
+	/* x^4 */
+	result = mult(result, x);
+	result = mult(result, c4);
+	result = sub(one, result);
+
+	/* x^3 */
+	result = mult(result, x);
+	result = mult(result, c3);
+	result = add(one, result);
+
+	/* x^2 */
+	result = mult(result, x);
+	result = mult(result, c2);
+	result = sub(one, result);
+
+	/* x^1 */
+	result = mult(result, x);
+
+	/* Combine components and return. */
+	return add(base, result);
+
+    }
+
+
+    pow(Float f1, Float f2) -> Float {
+
+        /* Return f1^f2. */
+
+	/* Since we've defined e^x and lnx, this one's easy. */
+
+	return exp(mult(f2, ln(f1)));
+    }
+
+}
+
+Main {
+
+    main() -> none {
+
+        Float f1, f2, f3;
+	FloatOps F;
+	Float one, r, N, Amt, res;
+
+	f1 = new Float(false, 0, 4194304)  /* value 1.5 */;
+	f2 = new Float(false, 2, 4613734)  /* value 6.2 */;
+
+	f3 = F.add(f1, f2);
+	f3.printval()  
+	/* Answer should be 7.7, which is;
+	    sign = 0,;
+	    exp  = 2,;
+	    frac = 7759462;
+	*/;
+
+	f3 = F.mult(f1, f2);
+	f3.printval()  
+	/* Answer should be 9.3, which is;
+	    sign = 0,;
+	    exp  = 3,;
+	    frac = 1363148;
+	*/;
+
+	f3 = F.div(f1, f2);
+	f3.printval()  
+	/* Answer should be .2419, which is;
+	    sign = 0,;
+	    exp  = -3,;
+	    frac = 7847408;
+	*/;
+
+	f3 = F.exp(f2);
+	f3.printval()  
+	/* Answer should be 492.749, which is;
+	    sign = 0,;
+	    exp  = 8,;
+	    frac = 7757789  --- 7829692;
+	*/;
+
+	f3 = F.ln(f2);
+	f3.printval()  
+	/* Answer should be 1.8245, which is;
+	    sign = 0,;
+	    exp  = 0,;
+	    frac = 6916820;
+	*/;
+
+	f3 = F.pow(f1, f2);
+	f3.printval()  ;
+	/* Answer should be 12.3528, which is;
+	    sign = 0,;
+	    exp  = 3,;
+	    frac = 4564252;
+	*/
+
+
+	/* Now an example using all of the functions.;
+	    Imagine you saved $5,000 a year for 35 years, invested;
+	    at 9% annual returns. What's the final value of the savings?;
+
+	    Use a geometric series and compare our software FP against;
+	    true answer. */
+
+	one = new Float(false,0,0)  /* value 1.0 */;
+	r = new Float(false,0,754975)  /* value 1.09 */;
+	N = new Float(false,5,786432)  /* value 35.0 */;
+	Amt = new Float(false,12,1851392)  /* value 5000.0 */;
+	
+	/* (1 - r^N) / (1 - r) */
+	res = F.div( F.sub( one , F.pow(r , N) ),
+	           F.sub( one , r)
+	         );
+	res = F.mult(res, Amt);
+	res.printval();
+
+	/* Final value should be $1,078,553.77, which is;
+	    sign = 0,;
+	    exp  = 20,;
+	    frac = 239822;
+
+	    Our soft-FP package computes frac as 91392, which is a final;
+	    value of $1,060,000. We've lost over $18k to poor precision. ;(;
+
+	    Notice also that we only get ~2 decimals of precision in the answer.;
+	    This is due to the divide, exp, and ln functions not being as;
+	    precise as they could be (especially divide). A challenge for;
+	    the interested is to write a better version of divide to raise;
+	    the precision of our final answer and lose fewer dollars from;
+	    our meager lifetime savings.;
+	*/
+    }
+}

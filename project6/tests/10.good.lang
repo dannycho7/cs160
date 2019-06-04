@@ -1,0 +1,18 @@
+classA {
+
+       doAll() -> none {
+       
+           print 5 * 6;
+
+       }
+
+}
+
+Main {
+
+     main() -> none {
+     	    classA a;
+	    a.doAll();
+     }
+
+}

@@ -1,0 +1,26 @@
+classA {
+
+       f0(integer x) -> integer {
+           return x * x;
+       }
+
+       doAll() -> none {
+       	   integer x, y;
+	   x = 1;
+	   y = 2;
+
+           print f0(5);
+	   print f0(6);
+	   print x + y;
+       }
+
+}
+
+Main {
+
+     main() -> none {
+     	    classA a;
+	    a.doAll();
+     }
+
+}

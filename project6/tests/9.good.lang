@@ -1,0 +1,25 @@
+Main {
+
+     main() -> none {
+     	    integer i, x;
+	    boolean cond;
+
+	    i = 0;
+	    x = 1;
+	    cond = false;
+
+	    while 8 >= i {
+	    	  cond = i - (i / 2) * 2 > 0;
+		  i = i + 1;
+		  if cond {
+		     x = x * 2;
+		  } else {
+		     x = x + 1;
+		  }
+		  print x;
+	    }
+     	    
+
+     }    
+
+}

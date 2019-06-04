@@ -1,0 +1,54 @@
+classA {
+     integer x;
+     integer y;
+
+     classA() -> none {
+         x = 0;
+	 y = 0;
+     }
+}
+
+classB {
+    integer xplus;
+    integer yplus    ;
+
+    classB(integer xval, integer yval) -> none {
+        xplus = xval;
+	yplus = yval;
+    }
+
+    makeA(classA a) -> classA {
+        classA aNew;
+
+	aNew = new classA();
+	aNew.x = a.x + xplus;
+	aNew.y = a.y + yplus;
+
+	return aNew;
+    }
+
+}
+
+
+Main {
+
+     main() -> none {
+     	    classA a1, a2;
+	    classB b;
+
+	    a1 = new classA();
+	    a1.x = 7;
+	    a1.y = 8;
+
+	    b = new classB(16, 22);
+	    a2 = b.makeA(a1);
+
+	    print a1.x;
+	    print a1.y;
+	    print b.xplus;
+	    print b.yplus;
+	    print a2.x;
+	    print a2.y;
+     }
+
+}

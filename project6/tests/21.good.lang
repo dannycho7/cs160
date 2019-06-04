@@ -1,0 +1,47 @@
+classA {
+     integer x;
+
+     classA(integer val) -> none {
+         x = val;
+     }
+}
+
+classB {
+    integer x;
+
+    classB() -> none {
+        x = 1;
+    }
+
+    fib(classA a) -> classA {
+        integer tmp;
+	tmp = x;
+
+	x = x + a.x;
+	print x;
+
+	return new classA(tmp);
+    }
+
+    dofib() -> none {
+
+        print 1;
+	print 1;
+	fib(fib(fib(fib(fib(fib(fib(fib(new classA(1)))))))));
+
+    }
+
+}
+
+
+Main {
+
+     main() -> none {
+	    classB b;
+
+	    b = new classB();
+	    b.dofib();
+	    
+     }
+
+}

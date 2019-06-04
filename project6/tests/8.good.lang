@@ -1,0 +1,17 @@
+Main {
+
+     main() -> none {
+     	    integer i, x;
+
+	    i = 0;
+	    x = 0;
+
+	    while 5 > i {
+	    	  x = x * i + 2;
+		  i = i + 1;
+		  print x;
+	    }
+
+     }    
+
+}

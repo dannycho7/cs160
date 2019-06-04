@@ -1,0 +1,35 @@
+Main {
+
+     main() -> none {
+     	    integer x, y;
+     	    x = 1;
+	    y = x + 1;
+	    x = y + 1;
+
+	    if y equals 2 {
+	       print 0;
+	    } else {
+	       print 1;
+	    }
+
+	    if x equals 2 {
+	       print 2;
+	    } else {
+	       print 3;
+	    }
+
+	    if 3 > x and 3 > y  {
+	       print 4;
+	    } else {
+	       print 5;
+	    }
+	    
+	    if 3 > x or 3 > y  {
+	       print 6;
+	    } else {
+	       print 7;
+	    }
+
+     }    
+
+}

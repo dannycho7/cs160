@@ -1,0 +1,21 @@
+classA {
+
+       f0(integer x) -> none {
+           print x * x;
+       }
+
+       doAll() -> none {
+           f0(5);
+	   f0(6);
+       }
+
+}
+
+Main {
+
+     main() -> none {
+     	    classA a;
+	    a.doAll();
+     }
+
+}
