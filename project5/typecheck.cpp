@@ -176,10 +176,10 @@ void TypeCheck::visitClassNode(ClassNode* node) {
   std::string superClassName = (node->identifier_2 == NULL) ? "" : node->identifier_2->name;
   if (!superClassName.empty() && this->classTable->find(superClassName) == this->classTable->end())
     typeError(undefined_class);
-  int membersSize = getVTSize(this->currentVariableTable);
-  ClassInfo ci = {superClassName, this->currentMethodTable, this->currentVariableTable, membersSize};
+  ClassInfo ci = {superClassName, this->currentMethodTable, this->currentVariableTable, 0};
   (*this->classTable)[this->currentClassName] = ci;
   node->visit_children(this);
+  (*this->classTable)[this->currentClassName].membersSize = getVTSize(this->currentVariableTable);
   for (std::list<DeclarationNode*>::iterator dn_it = node->declaration_list->begin(); dn_it != node->declaration_list->end(); dn_it++) {
     DeclarationNode* dn = *dn_it;
     for (std::list<IdentifierNode*>::iterator id_it = dn->identifier_list->begin(); id_it != dn->identifier_list->end(); id_it++) {
