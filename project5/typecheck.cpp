@@ -264,7 +264,7 @@ void TypeCheck::visitReturnStatementNode(ReturnStatementNode* node) {
 
 void TypeCheck::visitAssignmentNode(AssignmentNode* node) {
   node->visit_children(this);
-  CompoundType ct;
+  CompoundType compound_t;
   VariableInfo* vi;
   if (node->identifier_2 == NULL) {
     vi = NULL;
@@ -277,8 +277,9 @@ void TypeCheck::visitAssignmentNode(AssignmentNode* node) {
     if ((vi = findMember(this->classTable, vi->type.objectClassName, node->identifier_2->name)) == NULL)
       typeError(undefined_member);
   }
-  ct = vi->type;
-  if (ct.baseType != node->expression->basetype || ct.objectClassName != node->expression->objectClassName)
+  compound_t = vi->type;
+  if (compound_t.baseType != node->expression->basetype
+      || !isTypeOf(this->classTable, node->expression->objectClassName, compound_t.objectClassName))
     typeError(assignment_type_mismatch);
 }
 
