@@ -213,6 +213,8 @@ void TypeCheck::visitMethodNode(MethodNode* node) {
   }
   MethodInfo mi = {{node->type->basetype, node->type->objectClassName}, this->currentVariableTable, parameters, localsSize};
   (*this->currentMethodTable)[node->identifier->name] = mi;
+  if (node->type->basetype == bt_object && this->classTable->find(node->type->objectClassName) == this->classTable->end())
+    typeError(undefined_class);
   if (node->type->basetype != node->methodbody->basetype
       || !isTypeOf(this->classTable, node->methodbody->objectClassName, node->type->objectClassName))
     typeError(return_type_mismatch);
