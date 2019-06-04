@@ -146,7 +146,7 @@ Expression : Expression '+' Expression { $$ = new PlusNode($1, $3); }
            | T_INTEGER { $$ = new IntegerLiteralNode($1); }
            | T_TRUE { $$ = new BooleanLiteralNode($1); }
            | T_FALSE { $$ = new BooleanLiteralNode($1); }
-           | T_NEW T_IDENTIFIER { $$ = new NewNode($2, NULL); }
+           | T_NEW T_IDENTIFIER { $$ = new NewNode($2, new std::list<ExpressionNode*>()); }
            | T_NEW T_IDENTIFIER '(' ArgumentList ')' { $$ = new NewNode($2, $4); }
            ;
 MethodCall : T_IDENTIFIER OptDot '(' ArgumentList ')' { $$ = new MethodCallNode($1, $2, $4); }

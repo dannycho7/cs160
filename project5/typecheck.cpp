@@ -134,6 +134,15 @@ MethodInfo* validateMethodCall(ClassTable* ct, std::string className, std::strin
   return mi;
 }
 
+MethodInfo* validateConstructorCall(ClassTable* ct, std::string className, std::list<ExpressionNode*>* expression_list) {
+  ClassInfo ci = ct->find(className)->second;
+  if (_findMethodInCI(ci, className) == NULL) {
+    if (expression_list->size() == 0)
+      return NULL;
+  } else
+    return validateMethodCall(ct, className, className, expression_list);
+}
+
 // TypeCheck Visitor Functions: These are the functions you will
 // complete to build the symbol table and type check the program.
 // Not all functions must have code, many may be left empty.
@@ -433,7 +442,7 @@ void TypeCheck::visitNewNode(NewNode* node) {
   if (this->classTable->find(className) == this->classTable->end()) {
     typeError(undefined_class);
   } else {
-    validateMethodCall(this->classTable, className, className, node->expression_list);
+    validateConstructorCall(this->classTable, className, node->expression_list);
     node->basetype = bt_object;
     node->objectClassName = className;
   }
