@@ -1,5 +1,66 @@
 #include "codegeneration.hpp"
 
+static int getClassOffset(ClassTable* ct, std::string className) {
+    int offset = 0;
+    std::string superClassName = (*ct)[className].superClassName;
+    while (!superClassName.empty()) {
+        offset += (*ct)[superClassName].membersSize;
+        superClassName = (*ct)[superClassName].superClassName;
+    }
+    return offset;
+}
+
+static int getClassSize(ClassTable* ct, std::string className) {
+    return getClassOffset(ct, className) + (*ct)[className].membersSize;
+}
+
+static std::string findNameInClass(ClassTable* ct, std::string className, std::string name, void* (*findInClassInfo)(ClassInfo, std::string)) {
+  void* vi = NULL;
+  ClassInfo ci;
+  while (true) {
+    ci = ct->find(className)->second;
+    vi = findInClassInfo(ci, name);
+    if (vi != NULL)
+        break;
+    className = ci.superClassName;
+  }
+  return className;
+}
+
+static VariableInfo* findVariable(VariableTable* vt, std::string variableName) {
+  std::map<std::string, VariableInfo>::iterator vt_it = vt->find(variableName);
+  return (vt_it == vt->end()) ? NULL : &(vt_it->second);
+}
+
+static void* _findMemberInCI(ClassInfo ci, std::string memberName) {
+  return findVariable(ci.members, memberName);
+}
+
+static int getMemberOffsetInClass(ClassTable* ct, std::string className, std::string memberName) {
+    className = findNameInClass(ct, className, memberName, _findMemberInCI);
+    return getClassOffset(ct, className) + (*((*ct)[className].members))[memberName].offset;
+}
+
+static int getVariableOffsetInClass(ClassTable* ct, std::string className, std::string methodName, std::string memberName) {
+    VariableTable* method_vt = (*(*ct)[className].methods)[methodName].variables;
+    std::map<std::string, VariableInfo>::iterator vi_it =  method_vt->find(memberName);
+    if (vi_it != method_vt->end())
+        return vi_it->second.offset;
+    else
+        return getMemberOffsetInClass(ct, className, memberName);
+}
+
+static void* _findMethodInCI(ClassInfo ci, std::string methodName) {
+  MethodTable* mt = ci.methods;
+  std::map<std::string, MethodInfo>::iterator mt_it = mt->find(methodName);
+  return (mt_it == mt->end()) ? NULL : &(mt_it->second);
+}
+
+static std::string getMethodLabelInClass(ClassTable* ct, std::string className, std::string methodName) {
+    className = findNameInClass(ct, className, methodName, _findMethodInCI);
+    return className + "_" + methodName;
+}
+
 // CodeGenerator Visitor Functions: These are the functions
 // you will complete to generate the x86 assembly code. Not
 // all functions must have code, many may be left empty.

@@ -64,7 +64,7 @@ void typeError(TypeErrorCode code) {
   exit(1);
 }
 
-int getVTSize(VariableTable* vt) {
+static int getVTSize(VariableTable* vt) {
   int size = 0;
   std::map<std::string, VariableInfo>::iterator vt_it;
   for (vt_it = vt->begin(); vt_it != vt->end(); vt_it++)
@@ -72,7 +72,7 @@ int getVTSize(VariableTable* vt) {
   return size;
 }
 
-bool isTypeOf(ClassTable* ct, std::string class_1, std::string class_2) {
+static bool isTypeOf(ClassTable* ct, std::string class_1, std::string class_2) {
   while (class_1 != class_2) {
     class_1 = (*ct)[class_1].superClassName;
     if (class_1.empty())
@@ -81,7 +81,7 @@ bool isTypeOf(ClassTable* ct, std::string class_1, std::string class_2) {
   return true;
 }
 
-void* findInClass(ClassTable* ct, std::string className, std::string name, void* (*findInClassInfo)(ClassInfo, std::string)) {
+static void* findInClass(ClassTable* ct, std::string className, std::string name, void* (*findInClassInfo)(ClassInfo, std::string)) {
   void* vi = NULL;
   std::map<std::string, ClassInfo>::iterator ct_it;
   while (vi == NULL && !className.empty() && (ct_it = ct->find(className)) != ct->end()) {
@@ -92,30 +92,30 @@ void* findInClass(ClassTable* ct, std::string className, std::string name, void*
   return vi;
 }
 
-VariableInfo* findVariable(VariableTable* vt, std::string variableName) {
+static VariableInfo* findVariable(VariableTable* vt, std::string variableName) {
   std::map<std::string, VariableInfo>::iterator vt_it = vt->find(variableName);
   return (vt_it == vt->end()) ? NULL : &(vt_it->second);
 }
 
-void* _findMemberInCI(ClassInfo ci, std::string memberName) {
+static void* _findMemberInCI(ClassInfo ci, std::string memberName) {
   return findVariable(ci.members, memberName);
 }
 
-VariableInfo* findMember(ClassTable* ct, std::string className, std::string memberName) {
+static VariableInfo* findMember(ClassTable* ct, std::string className, std::string memberName) {
   return static_cast<VariableInfo*>(findInClass(ct, className, memberName, _findMemberInCI));
 }
 
-void* _findMethodInCI(ClassInfo ci, std::string methodName) {
+static void* _findMethodInCI(ClassInfo ci, std::string methodName) {
   MethodTable* mt = ci.methods;
   std::map<std::string, MethodInfo>::iterator mt_it = mt->find(methodName);
   return (mt_it == mt->end()) ? NULL : &(mt_it->second);
 }
 
-MethodInfo* findMethod(ClassTable* ct, std::string className, std::string methodName) {
+static MethodInfo* findMethod(ClassTable* ct, std::string className, std::string methodName) {
   return static_cast<MethodInfo*>(findInClass(ct, className, methodName, _findMethodInCI));
 }
 
-VariableInfo* getObjectVI(ClassTable* ct, VariableTable* vt, std::string currentClassName, std::string variableName) {
+static VariableInfo* getObjectVI(ClassTable* ct, VariableTable* vt, std::string currentClassName, std::string variableName) {
   VariableInfo* vi = NULL;
   if ((vi = findVariable(vt, variableName)) == NULL
     && (vi = findMember(ct, currentClassName, variableName)) == NULL) {
@@ -126,7 +126,7 @@ VariableInfo* getObjectVI(ClassTable* ct, VariableTable* vt, std::string current
   return vi;
 }
 
-MethodInfo* validateMethodCall(ClassTable* ct, std::string className, std::string methodName, std::list<ExpressionNode*>* expression_list) {
+static MethodInfo* validateMethodCall(ClassTable* ct, std::string className, std::string methodName, std::list<ExpressionNode*>* expression_list) {
   MethodInfo* mi = findMethod(ct, className, methodName);
   if (mi == NULL)
     typeError(undefined_method);
@@ -144,7 +144,7 @@ MethodInfo* validateMethodCall(ClassTable* ct, std::string className, std::strin
   return mi;
 }
 
-MethodInfo* validateConstructorCall(ClassTable* ct, std::string className, std::list<ExpressionNode*>* expression_list) {
+static MethodInfo* validateConstructorCall(ClassTable* ct, std::string className, std::list<ExpressionNode*>* expression_list) {
   ClassInfo ci = ct->find(className)->second;
   if (_findMethodInCI(ci, className) != NULL)
     return validateMethodCall(ct, className, className, expression_list);
