@@ -108,13 +108,9 @@ void CodeGenerator::visitMethodBodyNode(MethodBodyNode* node) {
     std::cout << "# METHOD BODY END" << std::endl;
 }
 
-void CodeGenerator::visitParameterNode(ParameterNode* node) {
-    // WRITEME: Replace with code if necessary
-}
+void CodeGenerator::visitParameterNode(ParameterNode* node) {}
 
-void CodeGenerator::visitDeclarationNode(DeclarationNode* node) {
-    // WRITEME: Replace with code if necessary
-}
+void CodeGenerator::visitDeclarationNode(DeclarationNode* node) {}
 
 void CodeGenerator::visitReturnStatementNode(ReturnStatementNode* node) {
     node->visit_children(this);
@@ -148,19 +144,44 @@ void CodeGenerator::visitDoWhileNode(DoWhileNode* node) {
 }
 
 void CodeGenerator::visitPlusNode(PlusNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# PLUS START" << std::endl;
+    node->visit_children(this);
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  add %ebx, %eax" << std::endl;
+    std::cout << "  push %eax" << std::endl;
+    std::cout << "# PLUS END" << std::endl;
 }
 
 void CodeGenerator::visitMinusNode(MinusNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# SUBTRACT START" << std::endl;
+    node->visit_children(this);
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  sub %ebx, %eax" << std::endl;
+    std::cout << "  push %eax" << std::endl;
+    std::cout << "# SUBTRACT END" << std::endl;
 }
 
 void CodeGenerator::visitTimesNode(TimesNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# MULTIPLY START" << std::endl;
+    node->visit_children(this);
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  imul %ebx, %eax" << std::endl;
+    std::cout << "  push %eax" << std::endl;
+    std::cout << "# MULTIPLY END" << std::endl;
 }
 
 void CodeGenerator::visitDivideNode(DivideNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# DIVIDE START" << std::endl;
+    node->visit_children(this);
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;    
+    std::cout << "  cdq" << std::endl;
+    std::cout << "  idiv %ebx" << std::endl;
+    std::cout << "  push %eax" << std::endl;
+    std::cout << "# DIVIDE END" << std::endl;
 }
 
 void CodeGenerator::visitGreaterNode(GreaterNode* node) {
@@ -238,17 +259,11 @@ void CodeGenerator::visitNewNode(NewNode* node) {
     // WRITEME: Replace with code if necessary
 }
 
-void CodeGenerator::visitIntegerTypeNode(IntegerTypeNode* node) {
-    // WRITEME: Replace with code if necessary
-}
+void CodeGenerator::visitIntegerTypeNode(IntegerTypeNode* node) {}
 
-void CodeGenerator::visitBooleanTypeNode(BooleanTypeNode* node) {
-    // WRITEME: Replace with code if necessary
-}
+void CodeGenerator::visitBooleanTypeNode(BooleanTypeNode* node) {}
 
-void CodeGenerator::visitObjectTypeNode(ObjectTypeNode* node) {
-    // WRITEME: Replace with code if necessary
-}
+void CodeGenerator::visitObjectTypeNode(ObjectTypeNode* node) {}
 
 void CodeGenerator::visitNoneNode(NoneNode* node) {
     // WRITEME: Replace with code if necessary
