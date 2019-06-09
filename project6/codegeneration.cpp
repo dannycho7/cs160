@@ -41,13 +41,16 @@ static int getMemberOffsetInClass(ClassTable* ct, std::string className, std::st
     return getClassOffset(ct, className) + (*((*ct)[className].members))[memberName].offset;
 }
 
-static int getVariableOffsetInClass(ClassTable* ct, std::string className, std::string methodName, std::string memberName) {
+static int getVariableOffsetInMethod(ClassTable* ct, std::string className, std::string methodName, std::string memberName) {
     VariableTable* method_vt = (*(*ct)[className].methods)[methodName].variables;
     std::map<std::string, VariableInfo>::iterator vi_it =  method_vt->find(memberName);
-    if (vi_it != method_vt->end())
-        return vi_it->second.offset;
-    else
-        return getMemberOffsetInClass(ct, className, memberName);
+    return vi_it->second.offset;
+}
+
+static bool isVariableLocal(ClassTable* ct, std::string className, std::string methodName, std::string memberName) {
+    VariableTable* method_vt = (*(*ct)[className].methods)[methodName].variables;
+    std::map<std::string, VariableInfo>::iterator vi_it =  method_vt->find(memberName);
+    return vi_it != method_vt->end();
 }
 
 static void* _findMethodInCI(ClassInfo ci, std::string methodName) {
@@ -118,7 +121,30 @@ void CodeGenerator::visitReturnStatementNode(ReturnStatementNode* node) {
 }
 
 void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# ASSIGNMENT START" << std::endl;
+    node->visit_children(this);
+    
+    int offset;
+    if (isVariableLocal(this->classTable, this->currentClassName, this->currentMethodName, node->identifier_1->name)) {
+        offset = getVariableOffsetInMethod(this->classTable, this->currentClassName, this->currentMethodName, node->identifier_1->name);
+        if (node->identifier_2) {
+            std::cout << "  mov " << offset << "(%ebp), %eax" << std::endl;
+        } else {
+            std::cout << "  mov %ebp, %eax" << std::endl;
+        }
+    } else {
+        int memberOffset = getMemberOffsetInClass(this->classTable, this->currentClassName, this->currentMethodName);
+        std::cout << "  movl $" << memberOffset << " %ebx" << std::endl;
+        std::cout << "  mov 8(%ebp), %eax" << std::endl;
+        std::cout << "  add %ebx, %eax" << std::endl;     
+    }
+    if (node->identifier_2) {
+        std::string memberClassName = (*this->currentMethodInfo.variables)[node->identifier_1->name].type.objectClassName;
+        offset = getMemberOffsetInClass(this->classTable, memberClassName, node->identifier_2->name);
+    }   
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  mov %ebx, " << offset << "(%eax)" << std::endl;
+    std::cout << "# ASSIGNMENT END" << std::endl;
 }
 
 void CodeGenerator::visitCallNode(CallNode* node) {
@@ -226,7 +252,7 @@ void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
         std::string objectName = node->identifier_1->name;
         objectClassName = (*this->currentMethodInfo.variables)[objectName].type.objectClassName;
         methodName = node->identifier_2->name;
-        obj_ebp_offset = getVariableOffsetInClass(this->classTable, objectClassName, methodName, objectName);
+        obj_ebp_offset = getVariableOffsetInMethod(this->classTable, objectClassName, methodName, objectName);
     }
     std::cout << "  push " << obj_ebp_offset << "(%ebp)" << std::endl;
     std::cout << "# PRE-CALL SEQUENCE END" << std::endl;
@@ -244,7 +270,13 @@ void CodeGenerator::visitMemberAccessNode(MemberAccessNode* node) {
 }
 
 void CodeGenerator::visitVariableNode(VariableNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::string variableName = node->identifier->name;
+    if (isVariableLocal(this->classTable, this->currentClassName, this->currentMethodName, variableName)) {
+        int offset = getVariableOffsetInMethod(this->classTable, this->currentClassName, this->currentMethodName, variableName);
+        std::cout << "  push " << offset << "(%ebp)" << std::endl;
+    } else {
+
+    }
 }
 
 void CodeGenerator::visitIntegerLiteralNode(IntegerLiteralNode* node) {
