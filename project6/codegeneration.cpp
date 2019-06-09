@@ -66,19 +66,46 @@ static std::string getMethodLabelInClass(ClassTable* ct, std::string className, 
 // all functions must have code, many may be left empty.
 
 void CodeGenerator::visitProgramNode(ProgramNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << ".data" << std::endl;
+    std::cout << "printstr: .asciz \"%d\\n\"" << std::endl;
+    std::cout << ".globl Main_main" << std::endl;
+    std::cout << ".text" << std::endl;
+    node->visit_children(this);
 }
 
 void CodeGenerator::visitClassNode(ClassNode* node) {
-    // WRITEME: Replace with code if necessary
+    this->currentClassName = node->identifier_1->name;
+    this->currentClassInfo = (*this->classTable)[this->currentClassName];
+    node->visit_children(this);
 }
 
 void CodeGenerator::visitMethodNode(MethodNode* node) {
-    // WRITEME: Replace with code if necessary
+    this->currentMethodName = node->identifier->name;
+    this->currentMethodInfo = (*this->currentClassInfo.methods)[this->currentMethodName];
+    std::cout << "# PROLOGUE START" << std::endl;
+    std::cout << getMethodLabelInClass(this->classTable, this->currentClassName, this->currentMethodName) << ":" << std::endl;
+    std::cout << "  push %ebp" << std::endl;
+    std::cout << "  mov %esp, %ebp" << std::endl;
+    std::cout << "  sub $" << this->currentMethodInfo.localsSize << ", %esp" << std::endl;
+    std::cout << "  push %ebx" << std::endl;
+    std::cout << "  push %edi" << std::endl;
+    std::cout << "  push %esi" << std::endl;
+    std::cout << "# PROLOGUE END" << std::endl;
+    node->visit_children(this);
+    std::cout << "# EPILOGUE START" << std::endl;
+    std::cout << "  pop %esi" << std::endl;
+    std::cout << "  pop %edi" << std::endl;
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  mov %ebp, %esp" << std::endl;
+    std::cout << "  pop %ebp" << std::endl;
+    std::cout << "  ret" << std::endl;
+    std::cout << "# EPILOGUE END" << std::endl;
 }
 
 void CodeGenerator::visitMethodBodyNode(MethodBodyNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# METHOD BODY START" << std::endl;
+    node->visit_children(this);
+    std::cout << "# METHOD BODY END" << std::endl;
 }
 
 void CodeGenerator::visitParameterNode(ParameterNode* node) {
@@ -90,7 +117,8 @@ void CodeGenerator::visitDeclarationNode(DeclarationNode* node) {
 }
 
 void CodeGenerator::visitReturnStatementNode(ReturnStatementNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
+    std::cout << "  pop %eax" << std::endl;
 }
 
 void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
@@ -98,7 +126,7 @@ void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
 }
 
 void CodeGenerator::visitCallNode(CallNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
 }
 
 void CodeGenerator::visitIfElseNode(IfElseNode* node) {
@@ -110,7 +138,9 @@ void CodeGenerator::visitWhileNode(WhileNode* node) {
 }
 
 void CodeGenerator::visitPrintNode(PrintNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
+    std::cout << "  push $printstr" << std::endl;
+    std::cout << "  call printf" << std::endl;
 }
 
 void CodeGenerator::visitDoWhileNode(DoWhileNode* node) {
@@ -162,7 +192,30 @@ void CodeGenerator::visitNegationNode(NegationNode* node) {
 }
 
 void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# PRE-CALL SEQUENCE START" << std::endl;
+    std::cout << "  push %eax" << std::endl;
+    std::cout << "  push %ecx" << std::endl;
+    std::cout << "  push %edx" << std::endl;
+    for (std::list<ExpressionNode*>::reverse_iterator en_it = node->expression_list->rbegin(); en_it != node->expression_list->rend(); en_it++)
+        (*en_it)->accept(this);
+    std::string objectClassName = this->currentClassName;
+    std::string methodName = node->identifier_1->name;
+    int obj_ebp_offset = 8;
+    if (node->identifier_2) {
+        std::string objectName = node->identifier_1->name;
+        objectClassName = (*this->currentMethodInfo.variables)[objectName].type.objectClassName;
+        methodName = node->identifier_2->name;
+        obj_ebp_offset = getVariableOffsetInClass(this->classTable, objectClassName, methodName, objectName);
+    }
+    std::cout << "  push " << obj_ebp_offset << "(%ebp)" << std::endl;
+    std::cout << "# PRE-CALL SEQUENCE END" << std::endl;
+    std::cout << "  call " << getMethodLabelInClass(this->classTable, objectClassName, methodName) << std::endl;
+    std::cout << "# POST-RETURN SEQUENCE START" << std::endl;
+    std::cout << "  add $" << 4 * node->expression_list->size() << ", %esp" << std::endl;
+    std::cout << "  pop %edx" << std::endl;
+    std::cout << "  pop %ecx" << std::endl;
+    std::cout << "  xchg %eax %esp" << std::endl;
+    std::cout << "# POST-RETURN SEQUENCE END" << std::endl;
 }
 
 void CodeGenerator::visitMemberAccessNode(MemberAccessNode* node) {
@@ -174,11 +227,11 @@ void CodeGenerator::visitVariableNode(VariableNode* node) {
 }
 
 void CodeGenerator::visitIntegerLiteralNode(IntegerLiteralNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
 }
 
 void CodeGenerator::visitBooleanLiteralNode(BooleanLiteralNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
 }
 
 void CodeGenerator::visitNewNode(NewNode* node) {
@@ -206,5 +259,5 @@ void CodeGenerator::visitIdentifierNode(IdentifierNode* node) {
 }
 
 void CodeGenerator::visitIntegerNode(IntegerNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "  push $" << node->value << std::endl;
 }
