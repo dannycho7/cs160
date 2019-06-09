@@ -111,8 +111,8 @@ void* _findMethodInCI(ClassInfo ci, std::string methodName) {
   return (mt_it == mt->end()) ? NULL : &(mt_it->second);
 }
 
-MethodInfo* findMethod(ClassTable* ct, std::string className, std::string memberName) {
-  return static_cast<MethodInfo*>(findInClass(ct, className, memberName, _findMethodInCI));
+MethodInfo* findMethod(ClassTable* ct, std::string className, std::string methodName) {
+  return static_cast<MethodInfo*>(findInClass(ct, className, methodName, _findMethodInCI));
 }
 
 VariableInfo* getObjectVI(ClassTable* ct, VariableTable* vt, std::string currentClassName, std::string variableName) {
