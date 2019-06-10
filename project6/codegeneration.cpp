@@ -123,7 +123,6 @@ void CodeGenerator::visitReturnStatementNode(ReturnStatementNode* node) {
 void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
     std::cout << "# ASSIGNMENT START" << std::endl;
     node->visit_children(this);
-    
     int offset;
     if (isVariableLocal(this->classTable, this->currentClassName, this->currentMethodName, node->identifier_1->name)) {
         offset = getVariableOffsetInMethod(this->classTable, this->currentClassName, this->currentMethodName, node->identifier_1->name);
@@ -133,8 +132,8 @@ void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
             std::cout << "  mov %ebp, %eax" << std::endl;
         }
     } else {
-        int memberOffset = getMemberOffsetInClass(this->classTable, this->currentClassName, this->currentMethodName);
-        std::cout << "  movl $" << memberOffset << " %ebx" << std::endl;
+        offset = getMemberOffsetInClass(this->classTable, this->currentClassName, node->identifier_1->name);
+        std::cout << "  movl $" << offset << ", %ebx" << std::endl;
         std::cout << "  mov 8(%ebp), %eax" << std::endl;
         std::cout << "  add %ebx, %eax" << std::endl;     
     }
@@ -275,7 +274,10 @@ void CodeGenerator::visitVariableNode(VariableNode* node) {
         int offset = getVariableOffsetInMethod(this->classTable, this->currentClassName, this->currentMethodName, variableName);
         std::cout << "  push " << offset << "(%ebp)" << std::endl;
     } else {
-
+        int memberOffset = getMemberOffsetInClass(this->classTable, this->currentClassName, variableName);
+        std::cout << "  mov 8(%ebp), %eax" << std::endl;
+        std::cout << "  add $" << memberOffset << ", %eax" << std::endl;
+        std::cout << "  push (%eax)" << std::endl;
     }
 }
 
