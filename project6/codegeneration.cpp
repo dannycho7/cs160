@@ -246,14 +246,22 @@ void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
         (*en_it)->accept(this);
     std::string objectClassName = this->currentClassName;
     std::string methodName = node->identifier_1->name;
-    int obj_ebp_offset = 8;
     if (node->identifier_2) {
         std::string objectName = node->identifier_1->name;
-        objectClassName = (*this->currentMethodInfo.variables)[objectName].type.objectClassName;
         methodName = node->identifier_2->name;
-        obj_ebp_offset = getVariableOffsetInMethod(this->classTable, objectClassName, methodName, objectName);
+        if (isVariableLocal(this->classTable, this->currentClassName, this->currentMethodName, objectName)) {
+            objectClassName = (*this->currentMethodInfo.variables)[objectName].type.objectClassName;
+            int obj_ebp_offset = getVariableOffsetInMethod(this->classTable, objectClassName, methodName, objectName);
+            std::cout << "  push " << obj_ebp_offset << "(%ebp)" << std::endl;
+        } else {
+            objectClassName = (*this->currentClassInfo.members)[objectName].type.objectClassName;
+            int memberOffset = getMemberOffsetInClass(this->classTable, this->currentClassName, objectName);
+            std::cout << "  mov 8(%ebp), %eax" << std::endl;
+            std::cout << "  push " << memberOffset << "(%eax)" << std::endl;
+        }
+    } else {
+        std::cout << "  push 8(%ebp)" << std::endl;
     }
-    std::cout << "  push " << obj_ebp_offset << "(%ebp)" << std::endl;
     std::cout << "# PRE-CALL SEQUENCE END" << std::endl;
     std::cout << "  call " << getMethodLabelInClass(this->classTable, objectClassName, methodName) << std::endl;
     std::cout << "# POST-RETURN SEQUENCE START" << std::endl;
