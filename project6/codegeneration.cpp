@@ -418,11 +418,30 @@ void CodeGenerator::visitBooleanLiteralNode(BooleanLiteralNode* node) {
 }
 
 void CodeGenerator::visitNewNode(NewNode* node) {
+    std::string className = node->identifier->name;
     std::cout << "# NEW NODE START" << std::endl;
-    std::cout << "  push $" << getClassSize(this->classTable, node->identifier->name) << std::endl;
+    MethodTable* mt = (*this->classTable)[className].methods;
+    if (mt->find(className) != mt->end()) {
+        std::cout << "# PRE-CALL SEQUENCE START" << std::endl;
+        std::cout << "  push %eax" << std::endl;
+        std::cout << "  push %ecx" << std::endl;
+        std::cout << "  push %edx" << std::endl;
+        for (std::list<ExpressionNode*>::reverse_iterator en_it = node->expression_list->rbegin(); en_it != node->expression_list->rend(); en_it++)
+            (*en_it)->accept(this);
+    }
+    std::cout << "  push $" << getClassSize(this->classTable, className) << std::endl;
     std::cout << "  call malloc" << std::endl;
     std::cout << "  add $4, %esp" << std::endl;
     std::cout << "  push %eax" << std::endl;
+    if (mt->find(className) != mt->end()) {
+        std::cout << "  call " << getMethodLabelInClass(this->classTable, className, className) << std::endl;
+        std::cout << "  pop %eax" << std::endl;
+        std::cout << "  add $" << 4 * (node->expression_list->size()) << ", %esp" << std::endl;
+        std::cout << "  pop %edx" << std::endl;
+        std::cout << "  pop %ecx" << std::endl;
+        std::cout << "  xchg %eax, (%esp)" << std::endl;
+        std::cout << "# POST-CALL SEQUENCE END" << std::endl;
+    }
     std::cout << "# NEW NODE END" << std::endl;
 }
 
