@@ -218,31 +218,63 @@ void CodeGenerator::visitDivideNode(DivideNode* node) {
 }
 
 void CodeGenerator::visitGreaterNode(GreaterNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  mov $0, %edx" << std::endl;
+    std::cout << "  cmp %ebx, %eax" << std::endl;
+    std::cout << "  setg %dl" << std::endl;
+    std::cout << "  push %edx" << std::endl;
 }
 
 void CodeGenerator::visitGreaterEqualNode(GreaterEqualNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  mov $0, %edx" << std::endl;
+    std::cout << "  cmp %ebx, %eax" << std::endl;
+    std::cout << "  setge %dl" << std::endl;
+    std::cout << "  push %edx" << std::endl;
 }
 
 void CodeGenerator::visitEqualNode(EqualNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);    
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  mov $0, %edx" << std::endl;
+    std::cout << "  cmp %ebx, %eax" << std::endl;
+    std::cout << "  sete %dl" << std::endl;
+    std::cout << "  push %edx" << std::endl;
 }
 
 void CodeGenerator::visitAndNode(AndNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;   
+    std::cout << "  and %ebx, %eax" << std::endl;
+    std::cout << "  push %eax" << std::endl;
 }
 
 void CodeGenerator::visitOrNode(OrNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
+    std::cout << "  pop %ebx" << std::endl;
+    std::cout << "  pop %eax" << std::endl;   
+    std::cout << "  or %ebx, %eax" << std::endl;
+    std::cout << "  push %eax" << std::endl;
 }
 
 void CodeGenerator::visitNotNode(NotNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
+    std::cout << "  pop %eax" << std::endl;   
+    std::cout << "  not %eax" << std::endl;
+    std::cout << "  push %eax" << std::endl;
 }
 
 void CodeGenerator::visitNegationNode(NegationNode* node) {
-    // WRITEME: Replace with code if necessary
+    node->visit_children(this);
+    std::cout << "  pop %eax" << std::endl;   
+    std::cout << "  neg %eax" << std::endl;
+    std::cout << "  push %eax" << std::endl;
 }
 
 void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
