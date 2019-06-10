@@ -261,7 +261,7 @@ void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
     std::cout << "  add $" << 4 * node->expression_list->size() << ", %esp" << std::endl;
     std::cout << "  pop %edx" << std::endl;
     std::cout << "  pop %ecx" << std::endl;
-    std::cout << "  xchg %eax %esp" << std::endl;
+    std::cout << "  xchg %eax, (%esp)" << std::endl;
     std::cout << "# POST-RETURN SEQUENCE END" << std::endl;
 }
 
