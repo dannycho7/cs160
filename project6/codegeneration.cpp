@@ -174,7 +174,7 @@ void CodeGenerator::visitIfElseNode(IfElseNode* node) {
     for (std::list<StatementNode*>::iterator sn_it = node->statement_list_1->begin(); sn_it != node->statement_list_1->end(); sn_it++)
         (*sn_it)->accept(this);
     std::string skipBranchLabelName = getLabelName(this->nextLabel());
-    std::cout << "jmp " << skipBranchLabelName << std::endl;
+    std::cout << "  jmp " << skipBranchLabelName << std::endl;
     std::cout << branchLabelName << ":" << std::endl;
     for (std::list<StatementNode*>::iterator sn_it = node->statement_list_2->begin(); sn_it != node->statement_list_2->end(); sn_it++)
         (*sn_it)->accept(this);
@@ -194,7 +194,7 @@ void CodeGenerator::visitWhileNode(WhileNode* node) {
     std::cout << "  je " << endLoopLabelName << std::endl;
     for (std::list<StatementNode*>::iterator sn_it = node->statement_list->begin(); sn_it != node->statement_list->end(); sn_it++)
         (*sn_it)->accept(this);
-    std::cout << "jmp " << beginLoopLabelName << std::endl;
+    std::cout << "  jmp " << beginLoopLabelName << std::endl;
     std::cout << endLoopLabelName << ":" << std::endl;
     std::cout << "# WHILE END" << std::endl;
 }
@@ -207,7 +207,20 @@ void CodeGenerator::visitPrintNode(PrintNode* node) {
 }
 
 void CodeGenerator::visitDoWhileNode(DoWhileNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# DO WHILE START" << std::endl;
+    std::string beginLoopLabelName = getLabelName(this->nextLabel());
+    std::cout << beginLoopLabelName << ":" << std::endl;
+    for (std::list<StatementNode*>::iterator sn_it = node->statement_list->begin(); sn_it != node->statement_list->end(); sn_it++)
+        (*sn_it)->accept(this);
+    node->expression->accept(this);
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  mov $0, %ebx" << std::endl;
+    std::cout << "  cmp %eax, %ebx" << std::endl;
+    std::string endLoopLabelName = getLabelName(this->nextLabel());
+    std::cout << "  je " << endLoopLabelName << std::endl;
+    std::cout << "  jmp " << beginLoopLabelName << std::endl;
+    std::cout << endLoopLabelName << ":" << std::endl;
+    std::cout << "# DO WHILE START" << std::endl;
 }
 
 void CodeGenerator::visitPlusNode(PlusNode* node) {
