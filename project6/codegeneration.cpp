@@ -162,6 +162,7 @@ void CodeGenerator::visitPrintNode(PrintNode* node) {
     node->visit_children(this);
     std::cout << "  push $printstr" << std::endl;
     std::cout << "  call printf" << std::endl;
+    std::cout << "  add $8, %esp" << std::endl;
 }
 
 void CodeGenerator::visitDoWhileNode(DoWhileNode* node) {
