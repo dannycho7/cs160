@@ -308,6 +308,7 @@ void CodeGenerator::visitAndNode(AndNode* node) {
     std::cout << "  pop %ebx" << std::endl;
     std::cout << "  pop %eax" << std::endl;   
     std::cout << "  and %ebx, %eax" << std::endl;
+    std::cout << "  and $1, %eax" << std::endl;
     std::cout << "  push %eax" << std::endl;
     std::cout << "# AND END" << std::endl;
 }
@@ -318,6 +319,7 @@ void CodeGenerator::visitOrNode(OrNode* node) {
     std::cout << "  pop %ebx" << std::endl;
     std::cout << "  pop %eax" << std::endl;   
     std::cout << "  or %ebx, %eax" << std::endl;
+    std::cout << "  and $1, %eax" << std::endl;
     std::cout << "  push %eax" << std::endl;
     std::cout << "# OR END" << std::endl;
 }
@@ -327,6 +329,7 @@ void CodeGenerator::visitNotNode(NotNode* node) {
     node->visit_children(this);
     std::cout << "  pop %eax" << std::endl;   
     std::cout << "  not %eax" << std::endl;
+    std::cout << "  and $1, %eax" << std::endl;
     std::cout << "  push %eax" << std::endl;
     std::cout << "# NOT END" << std::endl;
 }
