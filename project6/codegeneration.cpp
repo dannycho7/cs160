@@ -154,6 +154,7 @@ void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
 
 void CodeGenerator::visitCallNode(CallNode* node) {
     node->visit_children(this);
+    std::cout << "  pop %eax" << std::endl;
 }
 
 void CodeGenerator::visitIfElseNode(IfElseNode* node) {
@@ -272,7 +273,7 @@ void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
     std::cout << "# PRE-CALL SEQUENCE END" << std::endl;
     std::cout << "  call " << getMethodLabelInClass(this->classTable, objectClassName, methodName) << std::endl;
     std::cout << "# POST-RETURN SEQUENCE START" << std::endl;
-    std::cout << "  add $" << 4 * node->expression_list->size() << ", %esp" << std::endl;
+    std::cout << "  add $" << 4 * (node->expression_list->size() + 1) << ", %esp" << std::endl;
     std::cout << "  pop %edx" << std::endl;
     std::cout << "  pop %ecx" << std::endl;
     std::cout << "  xchg %eax, (%esp)" << std::endl;
@@ -336,13 +337,9 @@ void CodeGenerator::visitBooleanTypeNode(BooleanTypeNode* node) {}
 
 void CodeGenerator::visitObjectTypeNode(ObjectTypeNode* node) {}
 
-void CodeGenerator::visitNoneNode(NoneNode* node) {
-    // WRITEME: Replace with code if necessary
-}
+void CodeGenerator::visitNoneNode(NoneNode* node) {}
 
-void CodeGenerator::visitIdentifierNode(IdentifierNode* node) {
-    // WRITEME: Replace with code if necessary
-}
+void CodeGenerator::visitIdentifierNode(IdentifierNode* node) {}
 
 void CodeGenerator::visitIntegerNode(IntegerNode* node) {
     std::cout << "  push $" << node->value << std::endl;
