@@ -1,5 +1,11 @@
 #include "codegeneration.hpp"
 
+static std::string getLabelName(int currentLabel) {
+    std::stringstream ss;
+    ss << "BRANCHLABEL_" << currentLabel;
+    return ss.str();
+}
+
 static int getClassOffset(ClassTable* ct, std::string className) {
     int offset = 0;
     std::string superClassName = (*ct)[className].superClassName;
@@ -158,7 +164,22 @@ void CodeGenerator::visitCallNode(CallNode* node) {
 }
 
 void CodeGenerator::visitIfElseNode(IfElseNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# IF ELSE START" << std::endl;
+    node->expression->accept(this);
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  mov $0, %ebx" << std::endl;
+    std::cout << "  cmp %eax, %ebx" << std::endl;
+    std::string branchLabelName =  getLabelName(this->nextLabel());
+    std::cout << "  je " << branchLabelName << std::endl;
+    for (std::list<StatementNode*>::iterator sn_it = node->statement_list_1->begin(); sn_it != node->statement_list_1->end(); sn_it++)
+        (*sn_it)->accept(this);
+    std::string skipBranchLabelName = getLabelName(this->nextLabel());
+    std::cout << "jmp " << skipBranchLabelName << std::endl;
+    std::cout << branchLabelName << ":" << std::endl;
+    for (std::list<StatementNode*>::iterator sn_it = node->statement_list_2->begin(); sn_it != node->statement_list_2->end(); sn_it++)
+        (*sn_it)->accept(this);
+    std::cout << skipBranchLabelName << ":" << std::endl;
+    std::cout << "# IF ELSE END" << std::endl;
 }
 
 void CodeGenerator::visitWhileNode(WhileNode* node) {
@@ -218,6 +239,7 @@ void CodeGenerator::visitDivideNode(DivideNode* node) {
 }
 
 void CodeGenerator::visitGreaterNode(GreaterNode* node) {
+    std::cout << "# GREATER START" << std::endl;
     node->visit_children(this);
     std::cout << "  pop %ebx" << std::endl;
     std::cout << "  pop %eax" << std::endl;
@@ -225,9 +247,11 @@ void CodeGenerator::visitGreaterNode(GreaterNode* node) {
     std::cout << "  cmp %ebx, %eax" << std::endl;
     std::cout << "  setg %dl" << std::endl;
     std::cout << "  push %edx" << std::endl;
+    std::cout << "# GREATER END" << std::endl;
 }
 
 void CodeGenerator::visitGreaterEqualNode(GreaterEqualNode* node) {
+    std::cout << "# GREATER EQUAL START" << std::endl;
     node->visit_children(this);
     std::cout << "  pop %ebx" << std::endl;
     std::cout << "  pop %eax" << std::endl;
@@ -235,9 +259,11 @@ void CodeGenerator::visitGreaterEqualNode(GreaterEqualNode* node) {
     std::cout << "  cmp %ebx, %eax" << std::endl;
     std::cout << "  setge %dl" << std::endl;
     std::cout << "  push %edx" << std::endl;
+    std::cout << "# GREATER EQUAL END" << std::endl;
 }
 
 void CodeGenerator::visitEqualNode(EqualNode* node) {
+    std::cout << "# EQUAL START" << std::endl;
     node->visit_children(this);    
     std::cout << "  pop %ebx" << std::endl;
     std::cout << "  pop %eax" << std::endl;
@@ -245,36 +271,45 @@ void CodeGenerator::visitEqualNode(EqualNode* node) {
     std::cout << "  cmp %ebx, %eax" << std::endl;
     std::cout << "  sete %dl" << std::endl;
     std::cout << "  push %edx" << std::endl;
+    std::cout << "# EQUAL END" << std::endl;
 }
 
 void CodeGenerator::visitAndNode(AndNode* node) {
+    std::cout << "# AND START" << std::endl;
     node->visit_children(this);
     std::cout << "  pop %ebx" << std::endl;
     std::cout << "  pop %eax" << std::endl;   
     std::cout << "  and %ebx, %eax" << std::endl;
     std::cout << "  push %eax" << std::endl;
+    std::cout << "# AND END" << std::endl;
 }
 
 void CodeGenerator::visitOrNode(OrNode* node) {
+    std::cout << "# OR START" << std::endl;
     node->visit_children(this);
     std::cout << "  pop %ebx" << std::endl;
     std::cout << "  pop %eax" << std::endl;   
     std::cout << "  or %ebx, %eax" << std::endl;
     std::cout << "  push %eax" << std::endl;
+    std::cout << "# OR END" << std::endl;
 }
 
 void CodeGenerator::visitNotNode(NotNode* node) {
+    std::cout << "# NOT START" << std::endl;
     node->visit_children(this);
     std::cout << "  pop %eax" << std::endl;   
     std::cout << "  not %eax" << std::endl;
     std::cout << "  push %eax" << std::endl;
+    std::cout << "# NOT END" << std::endl;
 }
 
 void CodeGenerator::visitNegationNode(NegationNode* node) {
+    std::cout << "# NEGATION START" << std::endl;
     node->visit_children(this);
     std::cout << "  pop %eax" << std::endl;   
     std::cout << "  neg %eax" << std::endl;
     std::cout << "  push %eax" << std::endl;
+    std::cout << "# NEGATION END" << std::endl;
 }
 
 void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
