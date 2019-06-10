@@ -36,6 +36,11 @@ static void* _findMemberInCI(ClassInfo ci, std::string memberName) {
   return findVariable(ci.members, memberName);
 }
 
+static std::string getMemberClassTypeInClass(ClassTable* ct, std::string className, std::string memberName) {
+    std::string ownerClassName = findNameInClass(ct, className, memberName, _findMemberInCI);
+    return (*(*ct)[ownerClassName].members)[memberName].type.objectClassName;
+}
+
 static int getMemberOffsetInClass(ClassTable* ct, std::string className, std::string memberName) {
     className = findNameInClass(ct, className, memberName, _findMemberInCI);
     return getClassOffset(ct, className) + (*((*ct)[className].members))[memberName].offset;
@@ -128,6 +133,8 @@ void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
         offset = getVariableOffsetInMethod(this->classTable, this->currentClassName, this->currentMethodName, node->identifier_1->name);
         if (node->identifier_2) {
             std::cout << "  mov " << offset << "(%ebp), %eax" << std::endl;
+            std::string memberClassName = (*this->currentMethodInfo.variables)[node->identifier_1->name].type.objectClassName;
+            offset = getMemberOffsetInClass(this->classTable, memberClassName, node->identifier_2->name);
         } else {
             std::cout << "  mov %ebp, %eax" << std::endl;
         }
@@ -135,12 +142,12 @@ void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
         offset = getMemberOffsetInClass(this->classTable, this->currentClassName, node->identifier_1->name);
         std::cout << "  movl $" << offset << ", %ebx" << std::endl;
         std::cout << "  mov 8(%ebp), %eax" << std::endl;
-        std::cout << "  add %ebx, %eax" << std::endl;     
+        std::cout << "  add %ebx, %eax" << std::endl;
+        if (node->identifier_2) {
+            std::string memberClassName = getMemberClassTypeInClass(this->classTable, this->currentClassName, node->identifier_1->name);
+            offset = getMemberOffsetInClass(this->classTable, memberClassName, node->identifier_2->name);
+        }
     }
-    if (node->identifier_2) {
-        std::string memberClassName = (*this->currentMethodInfo.variables)[node->identifier_1->name].type.objectClassName;
-        offset = getMemberOffsetInClass(this->classTable, memberClassName, node->identifier_2->name);
-    }   
     std::cout << "  pop %ebx" << std::endl;
     std::cout << "  mov %ebx, " << offset << "(%eax)" << std::endl;
     std::cout << "# ASSIGNMENT END" << std::endl;
