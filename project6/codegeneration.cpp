@@ -183,7 +183,20 @@ void CodeGenerator::visitIfElseNode(IfElseNode* node) {
 }
 
 void CodeGenerator::visitWhileNode(WhileNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# WHILE START" << std::endl;
+    std::string beginLoopLabelName = getLabelName(this->nextLabel());
+    std::cout << beginLoopLabelName << ":" << std::endl;
+    node->expression->accept(this);
+    std::cout << "  pop %eax" << std::endl;
+    std::cout << "  mov $0, %ebx" << std::endl;
+    std::cout << "  cmp %eax, %ebx" << std::endl;
+    std::string endLoopLabelName = getLabelName(this->nextLabel());
+    std::cout << "  je " << endLoopLabelName << std::endl;
+    for (std::list<StatementNode*>::iterator sn_it = node->statement_list->begin(); sn_it != node->statement_list->end(); sn_it++)
+        (*sn_it)->accept(this);
+    std::cout << "jmp " << beginLoopLabelName << std::endl;
+    std::cout << endLoopLabelName << ":" << std::endl;
+    std::cout << "# WHILE END" << std::endl;
 }
 
 void CodeGenerator::visitPrintNode(PrintNode* node) {
