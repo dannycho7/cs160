@@ -280,7 +280,24 @@ void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
 }
 
 void CodeGenerator::visitMemberAccessNode(MemberAccessNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# MEMBER ACCESS START" << std::endl;
+    std::string objectName = node->identifier_1->name;
+    std::string memberName = node->identifier_2->name;
+    std::string objectClassName;
+    if (isVariableLocal(this->classTable, this->currentClassName, this->currentMethodName, objectName)) {
+        objectClassName = (*this->currentMethodInfo.variables)[objectName].type.objectClassName;
+        int obj_ebp_offset = getVariableOffsetInMethod(this->classTable, this->currentClassName, this->currentMethodName, objectName);
+        std::cout << "  mov " << obj_ebp_offset << "(%ebp), %eax" << std::endl;
+    } else {
+        objectClassName = (*this->currentClassInfo.members)[objectName].type.objectClassName;
+        int memberOffset = getMemberOffsetInClass(this->classTable, this->currentClassName, objectName);
+        std::cout << "  mov 8(%ebp), %eax" << std::endl;
+        std::cout << "  mov " << memberOffset << "(%eax), %eax" << std::endl;
+    }
+    
+    int objectMemberOffset= getMemberOffsetInClass(this->classTable, objectClassName, memberName);
+    std::cout << "  push " << objectMemberOffset << "(%eax)" << std::endl;
+    std::cout << "# MEMBER ACCESS END" << std::endl;
 }
 
 void CodeGenerator::visitVariableNode(VariableNode* node) {
