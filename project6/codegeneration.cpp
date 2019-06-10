@@ -176,8 +176,10 @@ void CodeGenerator::visitIfElseNode(IfElseNode* node) {
     std::string skipBranchLabelName = getLabelName(this->nextLabel());
     std::cout << "  jmp " << skipBranchLabelName << std::endl;
     std::cout << branchLabelName << ":" << std::endl;
-    for (std::list<StatementNode*>::iterator sn_it = node->statement_list_2->begin(); sn_it != node->statement_list_2->end(); sn_it++)
-        (*sn_it)->accept(this);
+    if (node->statement_list_2) {
+        for (std::list<StatementNode*>::iterator sn_it = node->statement_list_2->begin(); sn_it != node->statement_list_2->end(); sn_it++)
+            (*sn_it)->accept(this);
+    }
     std::cout << skipBranchLabelName << ":" << std::endl;
     std::cout << "# IF ELSE END" << std::endl;
 }
