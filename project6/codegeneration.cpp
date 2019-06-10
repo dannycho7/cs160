@@ -140,10 +140,9 @@ void CodeGenerator::visitAssignmentNode(AssignmentNode* node) {
         }
     } else {
         offset = getMemberOffsetInClass(this->classTable, this->currentClassName, node->identifier_1->name);
-        std::cout << "  movl $" << offset << ", %ebx" << std::endl;
         std::cout << "  mov 8(%ebp), %eax" << std::endl;
-        std::cout << "  add %ebx, %eax" << std::endl;
         if (node->identifier_2) {
+            std::cout << "  mov " << offset << "(%eax), %eax" << std::endl;
             std::string memberClassName = getMemberClassTypeInClass(this->classTable, this->currentClassName, node->identifier_1->name);
             offset = getMemberOffsetInClass(this->classTable, memberClassName, node->identifier_2->name);
         }
@@ -259,7 +258,7 @@ void CodeGenerator::visitMethodCallNode(MethodCallNode* node) {
         methodName = node->identifier_2->name;
         if (isVariableLocal(this->classTable, this->currentClassName, this->currentMethodName, objectName)) {
             objectClassName = (*this->currentMethodInfo.variables)[objectName].type.objectClassName;
-            int obj_ebp_offset = getVariableOffsetInMethod(this->classTable, objectClassName, methodName, objectName);
+            int obj_ebp_offset = getVariableOffsetInMethod(this->classTable, this->currentClassName, this->currentMethodName, objectName);
             std::cout << "  push " << obj_ebp_offset << "(%ebp)" << std::endl;
         } else {
             objectClassName = (*this->currentClassInfo.members)[objectName].type.objectClassName;
@@ -306,7 +305,12 @@ void CodeGenerator::visitBooleanLiteralNode(BooleanLiteralNode* node) {
 }
 
 void CodeGenerator::visitNewNode(NewNode* node) {
-    // WRITEME: Replace with code if necessary
+    std::cout << "# NEW NODE START" << std::endl;
+    std::cout << "  push $" << getClassSize(this->classTable, node->identifier->name) << std::endl;
+    std::cout << "  call malloc" << std::endl;
+    std::cout << "  add $4, %esp" << std::endl;
+    std::cout << "  push %eax" << std::endl;
+    std::cout << "# NEW NODE END" << std::endl;
 }
 
 void CodeGenerator::visitIntegerTypeNode(IntegerTypeNode* node) {}
